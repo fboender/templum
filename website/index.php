@@ -32,6 +32,12 @@
 				<li>Per-session caching of rendered templates.</li>
 				<li>Universal, global and local variables.</li>
 			</ul>
+			<p>Templum's template syntax has the following features:</p>
+			<table class='syntax'>
+				<tr><th><tt>{{</tt> and <tt>}}</tt></td><td>Echo's the variable, function or other PHP code between the accolades.</td></tr>
+				<tr><th><tt>[[</tt> and <tt>]]</tt></td><td>Start a PHP code block.</td></tr>
+				<tr><th><tt>@code</tt></td><td>Interpret a line starting with an at-sign as a line of PHP code.</td></tr>
+			</table>
 
 			<a name="example"><h2>Example</h2></a>
 			<p>The following is an example template that uses all available Templum syntax (but not necessarily in the best possible way). It greets the current user (using a universal variable) and then renders a list of all the known users. This template would normally be wrapped in header and footer templates.</p>

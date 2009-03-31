@@ -59,6 +59,16 @@ tt {
 	font-size: 12px;
 }
 /* Examples */
+table.syntax {
+	margin-left: 25px;
+}
+table.syntax th {
+	background-color: #303030;
+	padding: 0px 5px 0px 5px;
+}
+table.syntax td {
+	padding-left: 10px;
+}
 p.code_title {
 	background-color: #202020;
 	color: #FFFFFF;
