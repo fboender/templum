@@ -36,72 +36,11 @@
 			<a name="example"><h2>Example</h2></a>
 			<p>The following is an example template that uses all available Templum syntax (but not necessarily in the best possible way). It greets the current user (using a universal variable) and then renders a list of all the known users. This template would normally be wrapped in header and footer templates.</p>
 			<p class="code_title">Template <tt>view/account/list.tpl</tt></p>
-<pre class="code"><font color="#D0D0D0"><font color="#FFFF00">[[</font>
-if (!function_exists('helperBtnAction')) {
-	function helperBtnAction($action, $id, $icon) {
-		echo('&lt;a href=&quot;?action='.$action.'&amp;id='.$id.'&quot;&gt;');
-		echo('&lt;img src=&quot;ico/'.$icon.'.png&quot; alt=&quot;'.$icon.'&quot; /&gt;');
-		echo('&lt;/a&gt;');
-	};
-};
-<font color="#FFFF00">]]</font></font>
-&lt;h1&gt;Gebruikerslijst&lt;/h1&gt;
-
-&lt;p&gt;Hello <font color="#FFFF00">{{$username}}</font>, here's a list of all the users:&lt;/p&gt;
-
-&lt;div id=&quot;acocunts&quot;&gt;
-<font color="#FFFF00">   @if (count($accounts) &lt;= 0):</font>
-      No accounts found.
-<font color="#FFFF00">   @else:</font>
-      &lt;table&gt;
-         &lt;tr&gt;
-            &lt;th&gt;&amp;nbsp;&lt;/th&gt;
-            &lt;th&gt;Gebruikersnaam&lt;/th&gt;
-            &lt;th&gt;Volledige naam&lt;/th&gt;
-         &lt;/tr&gt;
-<font color="#FFFF00">         @foreach ($accounts as $account):</font>
-            &lt;tr&gt;
-               &lt;td&gt;<font color="#FFFF00">{{helperBtnAction('account.edit', $account['id'], 'edit')}}</font>&lt;/td&gt;
-               &lt;td&gt;<font color="#FFFF00">{{$account['username']}}</font>&lt;/td&gt;
-               &lt;td&gt;<font color="#FFFF00">{{$account['realname']}}</font>&lt;/td&gt;
-            &lt;/tr&gt;
-<font color="#FFFF00">         @endforeach</font>
-         &lt;tr&gt;
-            &lt;td&gt;<font color="#FFFF00">{{helperBtnAction('account.add', '', 'add')}}</font>&lt;/td&gt;
-            &lt;td colspan=&quot;4&quot;&gt;&amp;nbsp;&lt;/td&gt;
-         &lt;/tr&gt;
-      &lt;/table&gt;
-<font color="#FFFF00">   @endif</font>
-&lt;/div&gt;
-</pre>
-
+			<?php include('examples/all_syntax/list.tpl'); ?>
 			<p>And here is the code to render the template.</p>
+			<?php include('examples/all_syntax/list.phps'); ?>
 			<p class="code_title">Controller <tt>account_list.php</tt></p>
-<pre class="code">&lt;?php
 
-require_once('../../src/templum.php');
-
-<font color="#C0C0C0">// Dafine some data. This might as well have come from a database.</font>
-$username = 'jjohnson';
-$accounts = array(
-   array('id'=&gt;1, 'username'=&gt;'jjohnson',  'realname'=&gt;'John Johnson'),
-   array('id'=&gt;2, 'username'=&gt;'ppeterson', 'realname'=&gt;'Pete Peterson'),
-   array('id'=&gt;3, 'username'=&gt;'jdoe',      'realname'=&gt;'John Doe'),
-);
-
-<font color="#C0C0C0">// Create the Template engine with the base path for the templates.</font>
-$tplEngine = new TemplateEngine('view');
-
-<font color="#C0C0C0">// Set a universal variable which will be available in every template created</font>
-<font color="#C0C0C0">// using the template engine.</font>
-$tplEngine-&gt;setVar('username', $username);
-
-<font color="#C0C0C0">// Retrieve and render a template with the data in $accounts as a local</font>
-<font color="#C0C0C0">// variable and $username as a universal variable.</font>
-$tpl = $tplEngine-&gt;template('account', 'list');
-print($tpl-&gt;render(compact('accounts')));
-?&gt;
-</pre>
 			<a name="download"><h2>Download</h2></a>
 			<table class="download">
 				<tr><th>Maturity</th><th>Version</th><th>tar.gz</th><th>PEAR package</th><th>Documentation</th></tr>

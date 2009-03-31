@@ -1,10 +1,10 @@
 [[
 if (!function_exists('helperBtnAction')) {
-	function helperBtnAction($action, $id, $icon) {
-		echo('<a href="?action='.$action.'&id='.$id.'">');
-		echo('<img src="ico/'.$icon.'.png" alt="'.$icon.'" />');
-		echo('</a>');
-	};
+   function helperBtnAction($action, $id, $icon) {
+      echo('<a href="?action='.$action.'&id='.$id.'">');
+      echo('<img src="ico/'.$icon.'.png" alt="'.$icon.'" />');
+      echo('</a>');
+   };
 };
 ]]
 <h1>Gebruikerslijst</h1>
