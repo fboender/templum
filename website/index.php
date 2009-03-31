@@ -43,9 +43,10 @@
 			<p>The following is an example template that uses all available Templum syntax (but not necessarily in the best possible way). It greets the current user (using a universal variable) and then renders a list of all the known users. This template would normally be wrapped in header and footer templates.</p>
 			<p class="code_title">Template <tt>view/account/list.tpl</tt></p>
 			<?php include('examples/all_syntax/list.tpl'); ?>
+
 			<p>And here is the code to render the template.</p>
-			<?php include('examples/all_syntax/list.phps'); ?>
 			<p class="code_title">Controller <tt>account_list.php</tt></p>
+			<?php include('examples/all_syntax/list.phps'); ?>
 
 			<a name="download"><h2>Download</h2></a>
 			<table class="download">
