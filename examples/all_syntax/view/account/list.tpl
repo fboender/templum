@@ -2,12 +2,12 @@
 if (!function_exists('helperBtnAction')) {
    function helperBtnAction($action, $id, $icon) {
       echo('<a href="?action='.$action.'&id='.$id.'">');
-      echo('<img src="ico/'.$icon.'.png" alt="'.$icon.'" />');
+      echo('<img src="ico/'.$icon.'.png" alt="'.$icon.'" border="0" />');
       echo('</a>');
    };
 };
 ]]
-<h1>Gebruikerslijst</h1>
+<h1>User list</h1>
 
 <p>Hello {{$username}}, here's a list of all the users:</p>
 
@@ -18,8 +18,8 @@ if (!function_exists('helperBtnAction')) {
       <table>
          <tr>
             <th>&nbsp;</th>
-            <th>Gebruikersnaam</th>
-            <th>Volledige naam</th>
+            <th>Username</th>
+            <th>Full naam</th>
          </tr>
          @foreach ($accounts as $account):
             <tr>

@@ -1,25 +1,24 @@
-<pre class="code">&lt;?php
+<?php
 
 require_once('../../src/templum.php');
 
-<font color="#C0C0C0">// Dafine some data. This might as well have come from a database.</font>
+// Dafine some data. This might as well have come from a database.
 $username = 'jjohnson';
 $accounts = array(
-   array('id'=&gt;1, 'username'=&gt;'jjohnson',  'realname'=&gt;'John Johnson'),
-   array('id'=&gt;2, 'username'=&gt;'ppeterson', 'realname'=&gt;'Pete Peterson'),
-   array('id'=&gt;3, 'username'=&gt;'jdoe',      'realname'=&gt;'John Doe'),
+   array('id'=>1, 'username'=>'jjohnson',  'realname'=>'John Johnson'),
+   array('id'=>2, 'username'=>'ppeterson', 'realname'=>'Pete Peterson'),
+   array('id'=>3, 'username'=>'jdoe',      'realname'=>'John Doe'),
 );
 
-<font color="#C0C0C0">// Create the Template engine with the base path for the templates.</font>
+// Create the Template engine with the base path for the templates.
 $tplEngine = new TemplateEngine('view');
 
-<font color="#C0C0C0">// Set a universal variable which will be available in every template created</font>
-<font color="#C0C0C0">// using the template engine.</font>
-$tplEngine-&gt;setVar('username', $username);
+// Set a universal variable which will be available in every template created
+// using the template engine.
+$tplEngine->setVar('username', $username);
 
-<font color="#C0C0C0">// Retrieve and render a template with the data in $accounts as a local</font>
-<font color="#C0C0C0">// variable and $username as a universal variable.</font>
-$tpl = $tplEngine-&gt;template('account', 'list');
-print($tpl-&gt;render(compact('accounts')));
-?&gt;
-</pre>
+// Retrieve and render a template with the data in $accounts as a local
+// variable and $username as a universal variable.
+$tpl = $tplEngine->template('account', 'list');
+print($tpl->render(compact('accounts')));
+?>

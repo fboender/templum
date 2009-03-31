@@ -26,7 +26,7 @@
 			<ul>
 				<li>Lightweight. Only a single file; about 120 lines of code (excluding &plusmn;130 lines of API comments).</li>
 				<li>Re-uses PHP <a href="http://php.net/alternative_syntax">alternative syntax</a> for clarity and full power.</li>
-				<li>Very fast. Renders 100,000 templates in <tt>7.41s</tt> (Native PHP takes <tt>6.33s</tt>).</li>
+				<li>Very fast. Renders 10,000 templates in <tt>0.741s</tt> (Native PHP takes <tt>0.633s</tt>).</li>
 				<li>Namespaces.</li>
 				<li>I18N (translated) templates.</li>
 				<li>Per-session caching of rendered templates.</li>
@@ -47,6 +47,8 @@
 			<p>And here is the code to render the template.</p>
 			<p class="code_title">Controller <tt>account_list.php</tt></p>
 			<?php include('examples/all_syntax/list.phps'); ?>
+
+			<p>You can view the output this generates: <a href="examples/all_syntax/output.html">output.html</a></p>
 
 			<a name="download"><h2>Download</h2></a>
 			<table class="download">
