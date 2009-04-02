@@ -26,139 +26,55 @@
 */
 
 /**
- * @brief TemplateEngine errors.
+ * @brief Templum errors.
  * 
- * This exception is thrown by the TemplateEngine class when errors occur
+ * This exception is thrown by the Templum class when errors occur
  * during instantiation or when loading and parsing templates.
  */
-class TemplateEngineException extends Exception {
+class TemplumError extends Exception {
+
+	public function TemplumError($message, $code = 0) {
+		parent::__construct($message, $code);
+	}
 
 }
 
 /**
- * @brief Template errors.
+ * @brief TemplumTemplate errors.
  * 
- * This exception is thrown by the Template class when errors occur
+ * This exception is thrown by the TemplumTemplate class when errors occur
  * during the execution of templates. PHP errors, warnings and notices that
- * occur during the template execution are captured by the Template class and
- * are thrown as TemplateException exceptions.
+ * occur during the template execution are captured by the TemplumTemplate class and
+ * are thrown as TemplumTemplateError exceptions.
  */
-class TemplateException extends Exception {
+class TemplumTemplateError extends Exception {
 	
+	public function TemplumTemplateError($message, $code = 0) {
+		parent::__construct($message, $code);
+	}
+
 }
 
 /**
- * @brief Simple templating engine.
+ * @brief Templum Templating Engine.
  * 
- * The TemplateEngine class is an access class for retrieving templates.
- * Templates should be used to seperate the displaying of information from the
- * business logic of the application.
- *
- * The TemplateEngine is used to retrieve Template instances. When
- * instantiating a TemplateEngine class, you pass a path and possibly an array
- * of global variables and a locale to the constructor. You can then ask the
- * TemplateEngine class for Template() instances using the
- * TemplateClass->template() method. This requires you to pass a namespace for
- * the template, and the name of the template. The TemplateEngine class will
- * search the namespace for the template by concatenating the template path,
- * namespace, template name and the provided locale into a path like so:
- * <tt>TEMPLATEPATH/NAMESPACE/TEMPLATENAME.tpl.LOCALE</tt>. For example
- * <tt>views/network/list.tpl.en_UK</tt>.
- *
- * You can also retrieve Template instances by creating a template from a
- * string, using the templateFromString method.
- *
- * <h2>Variables</h2>
- *
- * There are two types of variables in the template engine. Global variables,
- * which are passed as the second parameter to the TemplateEngine constructor,
- * are variables that will be available in all of the templates retrieved using
- * that TemplateEngine instance. Local variables, which are passed to a
- * Template()'s render() method, are only available in that template.
- * 
- * <h2>Translated templated</h2>
- *
- * The template engine supports a crude form of translatable templates. If you
- * pass the TemplateEngine a locale as the third parameter, the template engine
- * will always first look for a template with the extension '.tpl.LOCALE'. For
- * example, say you create the template engine like so: <tt>$te =
- * TemplateEngine('./views/', array(), 'nl_NL');</tt>, it will look for a file
- * './views/NAMESPACE/TEMPLATENAME.tpl.nl_NL'. If such a file does not exist,
- * it will fall back to the default template
- * './views/NAMESPACE/TEMPLATENAME.tpl'.
- *
- * <h2>Template Language</h2>
- *
- * The Template language supported by the template engine is simple. Three
- * kinds of special syntax are suported:
- *
- * <table>
- * <tr><td><tt>{{</tt></td><td>Double opening accolades will be replaced with <tt><?php echo('</tt>.</td></tr>
- * <tr><td><tt>}}</tt></td><td>Double closing accolades will be replaced with <tt>'); ?></tt>.</td></tr>
- * <tr><td><tt>[[</tt></td><td>Double opening brackets will be replaced with <tt><?php </tt>.</td></tr>
- * <tr><td><tt>]]</tt></td><td>Double closing brackets will be replaced with <tt> ?></tt>.</td></tr>
- * <tr><td><tt>@ </tt></td><td>An '@' at the beginning of the line (column 0) will cause the entire line to be enclosed in: <tt>&lt;?php </tt> and <tt> ?&gt;</tt></td></tr>
- * </table>
- *
- * These simple rules allow you more easily embed PHP code in a template. The
- * following is an example of a template which uses all of the available
- * syntaxis:
- *
- * <pre>
- * [[
- * function formatServerCode($serverCode) {
- * 	// Formatting server codes only used in this template.
- * 	return('ZX-'.str_repeat('0', 5-strlen($serverCode)).$serverCode);
- * }
- * ]]
- * &lt;h1&gt;Server Owners&lt;/h1&gt;
- * 
- * &lt;p&gt;Hello {{$username}}. Here's a list of server owners:&lt;/p&gt;
- * 
- * &lt;table&gt;
- * 	&lt;tr&gt;&lt;th&gt;Server code&lt;/th&gt;&lt;th&gt;Owner&lt;/th&gt;&lt;/tr&gt;
- * \@foreach($serverinfo as $serverCode =&gt; $serverOwner):
- * 	  &lt;tr&gt;
- * 	  	&lt;td&gt;{{formatServerCode($serverCode)}}&lt;/td&gt;
- * 	  	&lt;td&gt;{{$serverOwner}}&lt;/td&gt;
- * 	  &lt;/tr&gt;
- * \@endforeach
- * &lt;/table&gt;
- * </pre>
- *
- * This template can be used like this (assuming the template is located in the directory 'views/objects/list.tpl'):
- *
- * <pre>
- * // Define some data.
- * $serverOwners = array(
- * 	'10080' => 'Ferry Boender',
- * 	'10081' => 'ZX Factory',
- * 	'10082' => 'ZX Factory',
- * 	'10083' => 'Customer X',
- * );
- * $username = 'fboender';
- * 
- * // Render the template.
- * $templatePath = 'views/';
- * $tplEngine = new TemplateEngine($templatePath);
- * $tpl = $tplEngine->template('objects', 'list_serverowners');
- * print $tpl->render(compact('username', 'serverOwners'));
- * </pre>
+ * This is the main Templum class. It takes care of retrieval, caching and
+ * compiling of (translated) templates.
  */
-class TemplateEngine {
+class Templum {
 	/**
-	 * @brief Create a new Template Engine instance.
+	 * @brief Create a new Templum instance.
 	 * @param $templatePath (string) The full or relative path to the template directory.
 	 * @param $varsUniversal (array) An array of key/value pairs that will be exported to every template retrieved using this template engine instance.
 	 * @param $locale (string) The locale for the templates to retrieve. If a file with the suffix noted in $locale is available, it will be returned instead of the default .tpl file.
-	 * @throw TemplateEngineException if the $templatePath can't be found or isn't a directory.
+	 * @throw TemplumError if the $templatePath can't be found or isn't a directory.
 	 */
-	public function TemplateEngine($templatePath, $varsUniversal = array(), $locale = NULL) {
+	public function Templum($templatePath, $varsUniversal = array(), $locale = NULL) {
 		if (!file_exists($templatePath)) {
-			throw new TemplateEngineException('No such file or directory');
+			throw new TemplumError("No such file or directory: $templatePath", 1);
 		}
 		if (!is_dir($templatePath)) {
-			throw new TemplateEngineException('Not a directory');
+			throw new TemplumError("Not a directory: $templatePath", 2);
 		}
 		$this->templatePath = rtrim($templatePath, '/');
 		$this->varsUniversal = $varsUniversal;
@@ -166,36 +82,32 @@ class TemplateEngine {
 		$this->cache = array();
 	}
 
+	/**
+	 * @brief Set a universal variable which will available in each template created with this Templum instance.
+	 * @param $varName (string) The name of the variable. This will become available in the template as $VARNAME.
+	 * @param $varValue (mixed) The value of the variable.
+	 */
 	public function setVar($varName, $varValue) {
 		$this->varsUniversal[$varName] = $varValue;
 	}
 
 	/**
-	 * @brief Retrieve a template by namespace and name from disk, caching it in memory for the duration of the TemplateEngine instance lifetime.
-	 * @param $namespace (string) Namespace (directory under $templatePath) to retrieve the template from.
-	 * @param $name (string) Template name, without the .tpl extension.
+	 * @brief Retrieve a template by from disk (caching it in memory for the duration of the Templum instance lifetime) or from cache.
+	 * @param $path (string) TemplumTemplate path, without the .tpl extension, relative to the templatePath.
 	 * @param $varsGlobal (array) Array of key/value pairs that will be exported to the returned template and all templates included by that template.
-	 * @throw TemplateException if the namespace isn't valid or the template couldn't be found.
+	 * @throw TemplumError if the template couldn't be read.
 	 */
-	public function template($namespace, $name, $varsGlobal = array()) {
-		/* FIXME: Add this to this file if needed, or reimplement */
-		/*
-		if (!Validate::namespace($namespace)) {
-			throw new TemplateException('Invalid namespace');
-		}
-		*/
-
-		$namespace = trim(str_replace('.', '/', $namespace), '/');
-		$fpath = $this->templatePath . '/' . $namespace . '/' . $name. '.tpl';
+	public function template($path, $varsGlobal = array()) {
+		$fpath = $this->templatePath . '/' . trim($path, '/').'.tpl';
 
 		// Check for translated version of this template.
 		if (!empty($this->locale)) {
-			$fpathTrans = $fpath.'.'.$this->locale;
 			// Check if the translated template exists in the cache. If it
 			// does, returned the cached result. Otherwise check the disk for
 			// the translated template.
+			$fpathTrans = realpath($fpath.'.'.$this->locale);
 			if (array_key_exists($fpathTrans, $this->cache)) {
-				return($this->cache[$fpath]);
+				return($this->cache[$fpathTrans]);
 			} else {
 				if (file_exists($fpathTrans)) {
 					$fpath = $fpathTrans;
@@ -204,22 +116,23 @@ class TemplateEngine {
 		// Check the non-translated version of this template
 		} else {
 			// Check the cache for the non-translated template. 
+			$fpath = realpath($fpath);
 			if (array_key_exists($fpath, $this->cache)) {
 				return($this->cache[$fpath]);
 			}
 		}
 
-		$fpath = realpath($fpath); // Normalize
-
 		// Check if the template exists. 
-		if (!file_exists($fpath)) {
-			throw new TemplateException('Template not found: '.$fpath);
+		if (!is_file($fpath)) {
+			throw new TemplumError("Template not found or not a file: $fpath", 3);
+		}
+		if (!is_readable($fpath)) {
+			throw new TemplumError("Template not readable: $fpath", 4);
 		}
 
 		// Load the base or translated template.
-		$template = new Template(
+		$template = new TemplumTemplate(
 				$this,
-				$namespace,
 				$fpath,
 				$this->compile(file_get_contents($fpath)), 
 				array_merge($this->varsUniversal, $varsGlobal)
@@ -229,21 +142,21 @@ class TemplateEngine {
 	}
 	
 	/**
-	 * @brief Create a Template from a string.
+	 * @brief Create a TemplumTemplate from a string.
 	 * 
-	 * Create a Template instance using $contents as the template contents.
-	 * This severely limited what you can do with the Template. There will be
+	 * Create a TemplumTemplate instance using $contents as the template contents.
+	 * This severely limited what you can do with the TemplumTemplate. There will be
 	 * no including from the template, no translations, no caching, etc.
 	 *
 	 * @param $contents (string) The template contents.
-	 * @returns (Template) Template class instance.
+	 * @returns (TemplumTemplate) TemplumTemplate class instance.
 	 */
 	public static function templateFromString($contents) {
 		// Load the base or translated template.
-		$template = new Template(
+		$template = new TemplumTemplate(
 				NULL,
 				"FROM_STRING",
-				TemplateEngine::compile($contents), 
+				Templum::compile($contents), 
 				array()
 			);
 		return($template);
@@ -252,7 +165,7 @@ class TemplateEngine {
 	/**
 	 * @brief Compile a template string to PHP code.
 	 * @param $contents (string) String to compile to PHP code.
-	 * @note This method is used by the TemplateEngine class itself, and shouldn't be called directly yourself. Use templateFromString() instead.
+	 * @note This method is used by the Templum class itself, and shouldn't be called directly yourself. Use templateFromString() instead.
 	 */
 	public static function compile($contents) {
 		// Parse custom short-hand tags to PHP code.
@@ -276,22 +189,45 @@ class TemplateEngine {
 	}
 }
 
-class Template {
-	public function Template($templateEngine, $namespace, $filename, $contents, $varsGlobal = array()) {
-		$this->templateEngine = $templateEngine;
-		$this->namespace = $namespace;
+/**
+ * @brief Template class
+ *
+ * This is the TemplumTemplate class. It represents a template and handles the
+ * actual rendering of the template, as well as catching errors during
+ * rendering. It also contains helper methods which can be used in templates.
+ */
+class TemplumTemplate {
+	/**
+	 * @brief Create a new TemplumTemplate instance. You'd normally get an instance from a Templum class instance.
+	 * @param $templateEngine (Templum instance) The Templum class instance that generated this TemplumTemplate instance.
+	 * @param $filename (string) The filename of this template.
+	 * @param $contents (string) The compiled contents of this template.
+	 * @param $varsGlobal (array) An array of key/value pairs which represent the global variables for this template and the templates it includes.
+	 */
+	public function TemplumTemplate($templum, $filename, $contents, $varsGlobal = array()) {
+		$this->templum = $templum;
 		$this->filename = $filename;
 		$this->contents = $contents;
 		$this->varsGlobal = $varsGlobal;
 	}
 
+	/**
+	 * @brief Add an global variable. The global variable will be available to this templates and all the templates it includes.
+	 * @param $varName (string) The name of the variable.
+	 * @param $varValue (mixed) The value of the variable.
+	 */
 	public function setVar($varName, $varValue) {
 		$this->varsGlobal[$varName] = $varValue;
 	}
 
+	/**
+	 * @brief Render the contents of the template and return it as a string.
+	 * @param $varsLocal (array) An array of key/value pairs which represent the local variables for this template. 
+	 * @return (string) The rendered contents of the template.
+	 */
 	public function render($varsLocal = array()) {
-		// Extract the Universal (embedded in global), Global and Local
-		// variables into the current namespace.
+		// Extract the Universal (embedded in global), Global and
+		// Localvariables into the current scope.
 		extract($this->varsGlobal);
 		extract($varsLocal);
 
@@ -313,6 +249,14 @@ class Template {
 		return($result);
 	}
 
+	/**
+	 * @brief The error handler that handles errors during the parsing of the template. 
+	 * @param $nr (int) Error code
+	 * @param $string (string) Error message
+	 * @param $file (string) Filename of the file in which the erorr occurred.
+	 * @param $line (int) Linenumber of the line on which the error occurred.
+	 * @note Do not call this yourself. It is used internally by Templum but must be public.
+	 */
 	public function errorHandler($nr, $string, $file, $line) {
 		// We can restore the old error handler, otherwise this error handler
 		// will stay active because we throw an exception below.
@@ -324,16 +268,16 @@ class Template {
 		ob_end_clean();
 
 		// Throw the exception
-		throw new TemplateException('Template error: \''.$string.'\' in file '.$this->filename.', line '.$line);
+		throw new TemplumTemplateError("$string (file: {$this->filename}, line $line)", 1);
 	}
 
 
 	/* LEFTOFF HERE */
-	public function inc($namespace, $name, $varLocals = array()) {
+	public function inc($name, $varLocals = array()) {
 		if (!isset($this->templateEngine)) {
-			throw new TemplateException('Cannot include in Template create from string.');
+			throw new TemplumTemplateError("Cannot include in TemplumTemplate create from string.");
 		}
-		$template = $this->templateEngine->template($namespace, $name, $this->varsGlobal);
+		$template = $this->templateEngine->template($name, $this->varsGlobal);
 		return($template->render());
 	}
 
