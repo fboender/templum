@@ -25,10 +25,24 @@
  * 
 */
 
+/**
+ * @brief TemplateEngine errors.
+ * 
+ * This exception is thrown by the TemplateEngine class when errors occur
+ * during instantiation or when loading and parsing templates.
+ */
 class TemplateEngineException extends Exception {
 
 }
 
+/**
+ * @brief Template errors.
+ * 
+ * This exception is thrown by the Template class when errors occur
+ * during the execution of templates. PHP errors, warnings and notices that
+ * occur during the template execution are captured by the Template class and
+ * are thrown as TemplateException exceptions.
+ */
 class TemplateException extends Exception {
 	
 }
