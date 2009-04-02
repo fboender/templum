@@ -11,14 +11,14 @@ $accounts = array(
 );
 
 // Create the Template engine with the base path for the templates.
-$tplEngine = new TemplateEngine('view');
+$templum = new Templum('view');
 
 // Set a universal variable which will be available in every template created
 // using the template engine.
-$tplEngine->setVar('username', $username);
+$templum->setVar('username', $username);
 
 // Retrieve and render a template with the data in $accounts as a local
 // variable and $username as a universal variable.
-$tpl = $tplEngine->template('account', 'list');
+$tpl = $templum->template('account', 'list');
 print($tpl->render(compact('accounts')));
 ?>
