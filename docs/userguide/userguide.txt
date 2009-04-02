@@ -31,7 +31,33 @@ Usage
 
 === API ===
 
-Description of the API, how to create templates, etc.
+Templum consists of two main classes.
+
++TemplateEngine+::
+  The +TemplateEngine+ class is the main class that facilitates templates. It
+  retrieves (translated) templates from disk or cache, compiles them and then
+  returns them ready for rendering as a +Template+ class instance.
+
++Template+::
+  +Template+ class instances represent templates ready for rendering by your
+  application. They are instantiated by the +TemplateEngine+ class. They handle
+  the actual rendering of the template. The +Template+ class also knows how to
+  handle errors in your templates, and has helper functions which can be used
+  from your templates to easily include other templates and to render
+  variabels.
+
+These two classes both have their own Exception class:
+
++TemplateEngineException+::
+  This exception is thrown by the +TemplateEngine+ class when an error occurs
+  such as non-existing templates, etc.
+
++TemplateException+::
+  This exception is thrown by the +Template+ class when errors occur in
+  rendering your template. This includes PHP errors such as uninitialized
+  variables. These errors are intercepted by the +Template+ class and then
+  raised as +TemplateException+ exceptions.
+
 
 === Template Language ===
 
