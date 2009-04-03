@@ -19,6 +19,6 @@ $templum->setVar('username', $username);
 
 // Retrieve and render a template with the data in $accounts as a local
 // variable and $username as a universal variable.
-$tpl = $templum->template('account', 'list');
+$tpl = $templum->template('account/list');
 print($tpl->render(compact('accounts')));
 ?>

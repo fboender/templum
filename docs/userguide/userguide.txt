@@ -21,7 +21,6 @@ statements.
 - Re-uses PHP alternative syntax for clarity and full power.
 - Very fast. Renders 10,000 templates in 0.741s (Native PHP takes
   0.633s).
-- Namespaces.
 - I18N (translated) templates.
 - Per-session caching of rendered templates.
 - Universal, global and local variables.
@@ -33,47 +32,187 @@ Usage
 
 Templum consists of two main classes.
 
-+TemplateEngine+::
-  The +TemplateEngine+ class is the main class that facilitates templates. It
-  retrieves (translated) templates from disk or cache, compiles them and then
-  returns them ready for rendering as a +Template+ class instance.
++Templum+::
+  The Templum class is the main class that facilitates templates. It retrieves
+  (translated) templates from disk or cache, compiles them and then returns
+  them ready for rendering as a TemplumTemplate class instance.
 
-+Template+::
-  +Template+ class instances represent templates ready for rendering by your
-  application. They are instantiated by the +TemplateEngine+ class. They handle
-  the actual rendering of the template. The +Template+ class also knows how to
-  handle errors in your templates, and has helper functions which can be used
-  from your templates to easily include other templates and to render
-  variabels.
++TemplumTemplate+::
+  TemplumTemplate class instances represent templates ready for rendering by
+  your application. They are instantiated by the Templum class, so you
+  shouldn't have to create them yourself. They handle the actual rendering of
+  the template. The TemplumTemplate class also knows how to handle errors in
+  your templates, and has helper functions which can be used from your
+  templates to easily include other templates and to render variabels.
 
-These two classes both have their own Exception class:
+Here are some examples of how to use these classes:
 
-+TemplateEngineException+::
-  This exception is thrown by the +TemplateEngine+ class when an error occurs
-  such as non-existing templates, etc.
-
-+TemplateException+::
-  This exception is thrown by the +Template+ class when errors occur in
-  rendering your template. This includes PHP errors such as uninitialized
-  variables. These errors are intercepted by the +Template+ class and then
-  raised as +TemplateException+ exceptions.
-
+FIXME:
 
 === Template Language ===
 
-Description of the template language.
+The Templum template language is extremely simple. It re-uses PHP's own
+alternative syntax (FIXME: LINK) for control logic in the templates. Other than
+that it includes some simple special markup that makes it easier to write
+templates:
+
++{{+ and +}}+::
+	Echo's the variable, function or other PHP printables between the
+	accolades. Echo'ed contents is automatically escaped using
+	+htmlentities()+.
++[[+ and +]]+::
+	Execute the PHP code between the brackets.
++@line+::
+	|An +at+ at the beginning of the line (prepended whitespace is allowed)
+	will cause the entire line to be executed as PHP code.
+
+It is recommended to use the Alternative PHP syntax for control structures
+(+if+, +while+, +for+, etc) as it greatly enhances the readability of your
+templates.
+
+An example of a template that uses all available syntax as well as the
+Alternative PHP syntax:
+
+------------------------------------------------------------------------
+[[
+if (!function_exists('helperBtnAction')) {
+   function helperBtnAction($action, $id, $icon) {
+      echo('<a href="?action='.$action.'&id='.$id.'">');
+      echo('<img src="ico/'.$icon.'.png" alt="'.$icon.'" border="0" />');
+      echo('</a>');
+   };
+};
+]]
+<h1>User list</h1>
+
+<p>Hello {{$username}}, here's a list of all the users:</p>
+
+<div id="acocunts">
+   @if (count($accounts) <= 0):
+      No accounts found.
+   @else:
+      <table>
+         <tr>
+            <th>&nbsp;</th>
+            <th>Username</th>
+            <th>Full naam</th>
+         </tr>
+         @foreach ($accounts as $account):
+            <tr>
+               <td>{{helperBtnAction('account.edit', $account['id'], 'edit')}}</td>
+               <td>{{$account['username']}}</td>
+               <td>{{$account['realname']}}</td>
+            </tr>
+         @endforeach
+         <tr>
+            <td>{{helperBtnAction('account.add', '', 'add')}}</td>
+            <td colspan="4">&nbsp;</td>
+         </tr>
+      </table>
+   @endif
+</div>
+------------------------------------------------------------------------
 
 === Variables ===
 
-Description of different variables: universal, global, local.
+Templum maintains three types of variables:
+
+Universal Variables::
+  The universal variables are set when you create Templum class instances
+  (using the $varsUniversal parameter). These variables are automatically made
+  available in every template created using the Templum instance. You can set
+  additional Universal variables using the +Templum->setVar()+ method.
+
+Global Variables::
+  The global variables are set using the +$varsGlobal+ parameter when you ask
+  the Templum class for a template using +Templum->template()+ method. Global
+  variables will be available to the retrieved template and any templates
+  included by that template. Additional global variables can be set using the
+  +TemplumTemplate->setVar()+ method on templates.
+
+Local Variables::
+  The Local variables are set when rendering the template by specifying the
+  +$varsLocal+ parameter to the +TemplumTemplate->render()+ method. The Local
+  variables will only be available to the template being rendered.
+
+An example of specifying Universal variables:
+
+$templum = new Templum('view', array('username'=>'jjohnson'));
+
+An easy way to pass variables is the PHP +compact()+ function. It takes a list
+a variable names as strings, and then looks at the current scope and creates an
+associative array with the variables:
+
+------------------------------------------------------------------------
+$firstname = 'John';
+$lastname = 'Johnson';
+
+var_dump(compact('firstname', 'lastname'));
+
+// Output:
+//
+// array(2) {
+//   ["firstname"]=>
+//   string(4) "John"
+//   ["lastname"]=>
+//   string(7) "Johnson"
+// }
+------------------------------------------------------------------------
+
+Here's an example that sets Universal, Global and Local variables:
+
+------------------------------------------------------------------------
+<?php
+
+require_once('../../src/templum.php');
+
+$app_title = "MyApp";
+$username = "fboender";
+$controllerCurrent = "users.list";
+$controllerTarget = "users.edit";
+$users = array(
+	"jjohnson"  => "John Johnson",
+	"ppeterson" => "Pete Peterson",
+	"jdoe"      => "John Doe"
+);
+
+// Universal variable $app_title
+$templum = new Templum('view', compact('app_title'));
+
+// Univeral variable $username
+$templum->setVar('username', $username);
+
+// Global variable $controllerCurrent
+$template = $templum->template('users.list', compact('controllerCurrent'));
+
+// Global variable $controllerTarget
+$template->setVar('controllerTarget', $controllerTarget);
+
+// Local variable '$users'
+print($template->render(compact('users')));
+------------------------------------------------------------------------
+
+=== Errors ===
+
+The two classes +Templum+ and +TemplumTemplate+ both have their own Exception
+class:
+
++TemplusError+::
+  This exception is thrown by the Templum class when an error occurs
+  such as non-existing templates, etc.
+
++TemplumTemplateError+::
+  This exception is thrown by the +TemplumTemplate+ class when errors occur in
+  rendering your template. This includes PHP errors such as uninitialized
+  variables. These errors are intercepted by the +TemplumTemplate+ class and
+  then raised as +TemplumTemplateError+ exceptions.
+
+Fatal errors that occur during template rendering cannot be intercepted by
+Templum, and therefor show normal PHP errors.
 
 === Internationalisation (I18N) ===
 
 Description of Internationalisation support.
-
-=== Namespaces ===
-
-Description of namespaces.
 
 === Security ===
 

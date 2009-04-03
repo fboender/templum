@@ -176,8 +176,8 @@ class Templum {
 				'[[', 
 				']]'),
 			array(
-				'<?php echo(', 
-				'); ?>',
+				'<?php echo(htmlentities(', 
+				')); ?>',
 				'<?php ',
 				' ?>',
 				),
