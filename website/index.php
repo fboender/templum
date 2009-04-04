@@ -53,7 +53,7 @@
 			<a name="download"><h2>Download</h2></a>
 			<h3>PEAR</h3>
 			<p>You can directly install Templum if you've got PEAR installed:</p>
-			<pre>pear install http://www.electricmonk.nl/temp/templum-0.1.0.tgz</pre>
+			<pre>pear install http://templum.electricmonk.nl/releases/templum-0.1.0.tgz</pre>
 
 			<h3>Source</h3>
 			<p>You can also download a normal source package. These source packages include the documentation and examples for that release.</p>
