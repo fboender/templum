@@ -2,7 +2,7 @@
 <?php
 
 require_once('class.UnitTest.php');
-require_once('../src/templum.php');
+require_once('templum.php');
 
 class TestTemplate {
 	public $templatePath = './test_data/templates/';
