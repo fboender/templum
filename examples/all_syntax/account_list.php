@@ -1,6 +1,6 @@
 <?php
 
-require_once('../../src/templum.php');
+require_once('templum.php');
 
 // Dafine some data. This might as well have come from a database.
 $username = 'jjohnson';

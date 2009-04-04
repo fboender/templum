@@ -1,6 +1,6 @@
 <?php
 
-require_once('../../src/templum.php');
+require_once('templum.php');
 
 $templum = new Templum('view');
 
