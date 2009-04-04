@@ -11,15 +11,15 @@ $accounts = array(
 );
 
 <font color="#C0C0C0">// Create the Template engine with the base path for the templates.</font>
-$tplEngine = new TemplateEngine('view');
+$templum = new Templum('view');
 
 <font color="#C0C0C0">// Set a universal variable which will be available in every template created</font>
 <font color="#C0C0C0">// using the template engine.</font>
-$tplEngine-&gt;setVar('username', $username);
+$templum-&gt;setVar('username', $username);
 
 <font color="#C0C0C0">// Retrieve and render a template with the data in $accounts as a local</font>
 <font color="#C0C0C0">// variable and $username as a universal variable.</font>
-$tpl = $tplEngine-&gt;template('account', 'list');
+$tpl = $templum-&gt;template('account/list');
 print($tpl-&gt;render(compact('accounts')));
 ?&gt;
 </pre>

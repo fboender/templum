@@ -27,14 +27,14 @@
 				<li>Lightweight. Only a single file; about 120 lines of code (excluding &plusmn;130 lines of API comments).</li>
 				<li>Re-uses PHP <a href="http://php.net/alternative_syntax">alternative syntax</a> for clarity and full power.</li>
 				<li>Very fast. Renders 10,000 templates in <tt>0.741s</tt> (Native PHP takes <tt>0.633s</tt>).</li>
-				<li>Namespaces.</li>
 				<li>I18N (translated) templates.</li>
 				<li>Per-session caching of rendered templates.</li>
+				<li>Security by automatic encoding of HTML entities.</li>
 				<li>Universal, global and local variables.</li>
 			</ul>
 			<p>Templum's template syntax has the following features:</p>
 			<table class='syntax'>
-				<tr><th><tt>{{</tt> and <tt>}}</tt></td><td>Echo's the variable, function or other PHP code between the accolades.</td></tr>
+				<tr><th><tt>{{</tt> and <tt>}}</tt></td><td>Echo's the variable, function or other PHP printables between the accolades. Echo'ed contents is automatically escaped using <tt>htmlentities()</tt>.</td></tr>
 				<tr><th><tt>[[</tt> and <tt>]]</tt></td><td>Start a PHP code block.</td></tr>
 				<tr><th><tt>@code</tt></td><td>Interpret a line starting with an at-sign as a line of PHP code.</td></tr>
 			</table>
