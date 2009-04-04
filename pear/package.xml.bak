@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.6.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.0     http://pear.php.net/dtd/package-2.0.xsd">
+ <name>templum</name>
+ <uri>http://templum.electricmonk.nl/download/</uri>
+ <summary>Templum is a lightweight, simple and fast templating engine for PHP.</summary>
+ <description>Templum is an extremely lightweight, simple yet powerful and fast templating engine for PHP. It re-uses the power of PHP itself for rendering templates, but provides additional features making it easier to write templating code. Rendering templates using Templum is very fast; it approximates native PHP rendering speed for include() statements.</description>
+ <lead>
+  <name>Ferry Boender</name>
+  <user>fboender</user>
+  <email>ferry.boender@electricmonk.nl</email>
+  <active>yes</active>
+ </lead>
+ <date>2009-04-04</date>
+ <time>15:39:57</time>
+ <version>
+  <release>0.1.0</release>
+  <api>0.1</api>
+ </version>
+ <stability>
+  <release>alpha</release>
+  <api>alpha</api>
+ </stability>
+ <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
+ <notes>Initial release.</notes>
+ <contents>
+  <dir baseinstalldir="PEAR/Templum" name="/">
+   <file baseinstalldir="PEAR/Templum" md5sum="18d6b56c2ea58b9d470e2449744a5449" name="templum.php" role="php" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+   <version>
+    <release>0.1.0</release>
+    <api>0.1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2009-04-04</date>
+   <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
+   <notes>Initial release.</notes>
+  </release>
+ </changelog>
+</package>
