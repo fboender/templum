@@ -34,9 +34,9 @@
 			</ul>
 			<p>Templum's template syntax has the following features:</p>
 			<table class='syntax'>
-				<tr><th><nobr><tt>{{</tt> and <tt>}}</tt></nobr></td><td>Echo's the variable, function or other PHP printables between the accolades. Echo'ed contents is automatically escaped using <tt>htmlentities()</tt>.</td></tr>
-				<tr><th><nobr><tt>[[</tt> and <tt>]]</tt></nobr></td><td>Start a PHP code block.</td></tr>
-				<tr><th><nobr><tt>@code</tt></nobr></td><td>Interpret a line starting with an at-sign as a line of PHP code.</td></tr>
+				<tr valign="top"><th><nobr><tt>{{</tt> and <tt>}}</tt></nobr></td><td>Echo's the variable, function or other PHP printables between the accolades. Echo'ed contents is automatically escaped using <tt>htmlentities()</tt>.</td></tr>
+				<tr valign="top"><th><nobr><tt>[[</tt> and <tt>]]</tt></nobr></td><td>Start a PHP code block.</td></tr>
+				<tr valign="top"><th><nobr><tt>@code</tt></nobr></td><td>Interpret a line starting with an at-sign as a line of PHP code.</td></tr>
 			</table>
 
 			<a name="example"><h2>Example</h2></a>
@@ -65,9 +65,9 @@
 			<a name="develop"><h2>Development</h2></a>
 			<p>Want to help out with Templum development? Or just want to run the latest, hot-off-the-press, bleeding edge version? Or just have a quick look at the code?</p>
 			<table>
-				<tr><td><img src="style/default/ico_source.png" alt="Source" valign="top" /></td><td><a href="https://svn.electricmonk.nl/svn/">WebSVN Subversion frontend</a></td></tr>
-				<tr><td><img src="style/default/ico_bug.png" alt="Bugreport" valign="top" /></td><td><a href="https://svn.electricmonk.nl">Bug reports</a></td></tr>
-				<tr><td><img src="style/default/ico_svn.png" alt="Subversion" valign="top" /></td><td><a href="https://svn.electricmonk.nl">https://svn.electricmonk.nl/svn/templum/trunk/</a></td></tr>
+				<tr><td><img src="style/default/ico_source.png" alt="Source" valign="top" /></td><td><a href="https://svn.electricmonk.nl/public/listing.php?repname=templum&path=%2F&">WebSVN Subversion frontend</a></td></tr>
+				<tr><td><img src="style/default/ico_bug.png" alt="Bugreport" valign="top" /></td><td><a href="https://svn.electricmonk.nl/trac/templum">Bug reports</a></td></tr>
+				<tr><td><img src="style/default/ico_svn.png" alt="Subversion" valign="top" /></td><td><a href="https://svn.electricmonk.nl/svn/templum/trunk/">https://svn.electricmonk.nl/svn/templum/trunk/</a></td></tr>
 			</table>
 
 			<a name="licensecopy"><h2>License / Copright</h2></a>
