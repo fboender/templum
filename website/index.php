@@ -51,11 +51,15 @@
 			<p>You can view the output this generates: <a href="examples/all_syntax/output.html">output.html</a></p>
 
 			<a name="download"><h2>Download</h2></a>
+			<h3>PEAR</h3>
+			<p>You can directly install Templum if you've got PEAR installed:</p>
+			<pre>pear install http://www.electricmonk.nl/temp/templum-0.1.0.tgz</pre>
+
+			<h3>Source</h3>
+			<p>You can also download a normal source package. These source packages include the documentation and examples for that release.</p>
 			<table class="download">
-				<tr><th>Maturity</th><th>Version</th><th>tar.gz</th><th>PEAR package</th><th>Documentation</th></tr>
-				<tr><td class="stable">Stable</td><td>v0.1</td><td><a href="download/templum-0.1.tar.gz">templum-0.1.tar.gz</a></td><td><a href="download/templum-0.1.tar.gz">templum.zip</a></td><td><a href="">Documentation</a></td></tr>
-				<tr><td class="beta">Beta</td><td>v0.1</td><td><a href="download/templum-0.1.tar.gz">templum-0.1.tar.gz</a></td><td><a href="download/templum-0.1.tar.gz">templum.zip</a></td><td><a href="">Documentation</a></td></tr>
-				<tr><td class="alpha">Alpha</td><td>v0.1</td><td><a href="download/templum-0.1.tar.gz">templum-0.1.tar.gz</a></td><td><a href="download/templum-0.1.tar.gz">templum.zip</a></td><td><a href="">Documentation</a></td></tr>
+				<tr><th>Maturity</th><th>Version</th><th>tar.gz</th></tr>
+				<tr><td class="alpha">Alpha</td><td>v0.1.0</td><td><a href="releases/templum-src-0.1.0.tar.gz">templum-src-0.1.0.tar.gz</a></td></tr>
 			</table>
 
 			<a name="develop"><h2>Development</h2></a>
