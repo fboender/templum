@@ -1,6 +1,6 @@
 <pre class="code">&lt;?php
 
-require_once('../../src/templum.php');
+require_once('templum.php');
 
 <font color="#C0C0C0">// Dafine some data. This might as well have come from a database.</font>
 $username = 'jjohnson';
