@@ -34,9 +34,9 @@
 			</ul>
 			<p>Templum's template syntax has the following features:</p>
 			<table class='syntax'>
-				<tr><th><tt>{{</tt> and <tt>}}</tt></td><td>Echo's the variable, function or other PHP printables between the accolades. Echo'ed contents is automatically escaped using <tt>htmlentities()</tt>.</td></tr>
-				<tr><th><tt>[[</tt> and <tt>]]</tt></td><td>Start a PHP code block.</td></tr>
-				<tr><th><tt>@code</tt></td><td>Interpret a line starting with an at-sign as a line of PHP code.</td></tr>
+				<tr><th><nobr><tt>{{</tt> and <tt>}}</tt></nobr></td><td>Echo's the variable, function or other PHP printables between the accolades. Echo'ed contents is automatically escaped using <tt>htmlentities()</tt>.</td></tr>
+				<tr><th><nobr><tt>[[</tt> and <tt>]]</tt></nobr></td><td>Start a PHP code block.</td></tr>
+				<tr><th><nobr><tt>@code</tt></nobr></td><td>Interpret a line starting with an at-sign as a line of PHP code.</td></tr>
 			</table>
 
 			<a name="example"><h2>Example</h2></a>
