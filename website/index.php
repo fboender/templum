@@ -54,8 +54,8 @@
 			<a name="documentation"><h2>Documentation</h2></a>
 			<p>This documentation applies to the latest stable release. More documentation and examples can be found in the downloadable archive file for each release.</p>
 			<ul>
-				<li><a href="docs/userguide.html">Userguide</a></li>
-				<li><a href="docs/api/index.html">API Reference</a></li>
+				<li><a href="docs/userguide/userguide.html">Userguide</a></li>
+				<li><a href="docs/api/html/index.html">API Reference</a></li>
 			</ul>
 
 			<a name="download"><h2>Download</h2></a>
