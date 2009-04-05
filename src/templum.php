@@ -33,6 +33,11 @@
  */
 class TemplumError extends Exception {
 
+	/**
+	 * @brief Create a new TemplumError instance
+	 * @param $message (string) The error message.
+	 * @param $code (int) The error code
+	 */
 	public function TemplumError($message, $code = 0) {
 		parent::__construct($message, $code);
 	}
@@ -49,6 +54,11 @@ class TemplumError extends Exception {
  */
 class TemplumTemplateError extends Exception {
 	
+	/**
+	 * @brief Create a new TemplumTemplateError instance
+	 * @param $message (string) The error message.
+	 * @param $code (int) The error code
+	 */
 	public function TemplumTemplateError($message, $code = 0) {
 		parent::__construct($message, $code);
 	}
@@ -199,7 +209,7 @@ class Templum {
 class TemplumTemplate {
 	/**
 	 * @brief Create a new TemplumTemplate instance. You'd normally get an instance from a Templum class instance.
-	 * @param $templateEngine (Templum instance) The Templum class instance that generated this TemplumTemplate instance.
+	 * @param $templum (Templum instance) The Templum class instance that generated this TemplumTemplate instance.
 	 * @param $filename (string) The filename of this template.
 	 * @param $contents (string) The compiled contents of this template.
 	 * @param $varsGlobal (array) An array of key/value pairs which represent the global variables for this template and the templates it includes.
