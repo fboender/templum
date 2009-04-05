@@ -14,8 +14,11 @@ rm src/package.xml
 
 mkdir release/templum-$VERSION
 mkdir release/templum-$VERSION/docs
+mkdir release/templum-$VERSION/docs/userguide
+mkdir release/templum-$VERSION/docs/api
 mkdir release/templum-$VERSION/templum
-cp docs/userguide/userguide.html release/templum-$VERSION/docs/
+cp docs/userguide/userguide.html release/templum-$VERSION/docs/userguide/
+cp -r docs/api/html release/templum-$VERSION/docs/api/
 cp src/templum.php release/templum-$VERSION/templum/
 cd release
 tar -czf templum-src-$VERSION.tar.gz templum-$VERSION

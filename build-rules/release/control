@@ -1,2 +1,2 @@
 description: Create a new release.
-require: docs.userguide
+require: docs.api, docs.userguide
