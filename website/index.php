@@ -33,11 +33,11 @@
 				<li>Universal, global and local variables.</li>
 			</ul>
 			<p>Templum's template syntax has the following features:</p>
-			<table class='syntax'>
-				<tr valign="top"><th><nobr><tt>{{</tt> and <tt>}}</tt></nobr></td><td>Echo's the variable, function or other PHP printables between the accolades. Echo'ed contents is automatically escaped using <tt>htmlentities()</tt>.</td></tr>
-				<tr valign="top"><th><nobr><tt>[[</tt> and <tt>]]</tt></nobr></td><td>Start a PHP code block.</td></tr>
-				<tr valign="top"><th><nobr><tt>@code</tt></nobr></td><td>Interpret a line starting with an at-sign as a line of PHP code.</td></tr>
-			</table>
+			<ul>
+				<li><tt>{{</tt> and <tt>}}</tt><br />Echo's the variable, function or other PHP printables between the accolades. Echo'ed contents is automatically escaped using <tt>htmlentities()</tt>.</li>
+				<li><tt>[[</tt> and <tt>]]</tt><br />Start a PHP code block.</li>
+				<li><tt>@line</tt><br />Interpret a line starting with an at-sign as a line of PHP code.</li>
+			</ul>
 
 			<a name="example"><h2>Example</h2></a>
 			<p>The following is an example template that uses all available Templum syntax (but not necessarily in the best possible way). It greets the current user (using a universal variable) and then renders a list of all the known users. This template would normally be wrapped in header and footer templates.</p>
