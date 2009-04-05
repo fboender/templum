@@ -13,6 +13,7 @@
 			<a href="#about">About</a>
 			<a href="#features">Features</a>
 			<a href="#example">Example</a>
+			<a href="#documentation">Documentation</a>
 			<a href="#download">Download</a>
 			<a href="#develop">Development</a>
 			<a href="#licensecopy">License / Copright</a>
@@ -50,10 +51,20 @@
 
 			<p>You can view the output this generates: <a href="examples/all_syntax/output.html">output.html</a></p>
 
+			<a name="documentation"><h2>Documentation</h2></a>
+			<p>This documentation applies to the latest stable release. More documentation and examples can be found in the downloadable archive file for each release.</p>
+			<ul>
+				<li><a href="docs/userguide.html">Userguide</a></li>
+				<li><a href="docs/api/index.html">API Reference</a></li>
+			</ul>
+
 			<a name="download"><h2>Download</h2></a>
 			<h3>PEAR</h3>
-			<p>You can directly install Templum if you've got PEAR installed:</p>
+			<p>You can directly install Templum from the Internet if you've got PEAR installed with the following command:</p>
 			<pre>pear install http://templum.electricmonk.nl/releases/templum-0.1.0.tgz</pre>
+			<p>You can also download the PEAR package manually and install it with:</p>
+			<pre>pear install ./templum-0.1.0.tgz</pre>
+			<p><a href="http://templum.electricmonk.nl/releases/templum-0.1.0.tgz">http://templum.electricmonk.nl/releases/templum-0.1.0.tgz</a></p>
 
 			<h3>Source</h3>
 			<p>You can also download a normal source package. These source packages include the documentation and examples for that release.</p>
