@@ -1,8 +1,10 @@
 #!/usr/bin/php
 <?php
 
+error_reporting(E_ALL);
+
 require_once('class.UnitTest.php');
-require_once('templum.php');
+require_once('../src/templum.php');
 
 class TestTemplate {
 	public $templatePath = './test_data/templates/';
