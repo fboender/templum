@@ -43,11 +43,11 @@
 			<a name="example"><h2>Example</h2></a>
 			<p>The following is an example template that uses all available Templum syntax (but not necessarily in the best possible way). It greets the current user (using a universal variable) and then renders a list of all the known users. This template would normally be wrapped in header and footer templates.</p>
 			<p class="code_title">Template <tt>view/account/list.tpl</tt></p>
-			<?php include('examples/all_syntax/list.tpl'); ?>
+			<?php readfile('examples/all_syntax/list.tpl'); ?>
 
 			<p>And here is the code to render the template.</p>
 			<p class="code_title">Controller <tt>account_list.php</tt></p>
-			<?php include('examples/all_syntax/list.phps'); ?>
+			<?php readfile('examples/all_syntax/list.phps'); ?>
 
 			<p>You can view the output this generates: <a href="examples/all_syntax/output.html">output.html</a></p>
 
@@ -85,6 +85,7 @@
 			<p class="sponsor"><a href="http://www.zx.nl"><img src="style/default/sponsor_zx.png" alt="ZX" border="0" align="middle" /></a></p>
 			<p>Templum is Open Source and is licensed under the <a href="http://www.opensource.org/licenses/mit-license.html">MIT License</a>. This means you can use, change and redistribute it in both non-commercial and commercial scenarios. For more information, read the <a href="http://www.opensource.org/licenses/mit-license.html">whole license</a>.</p>
 			<p>Templum is copyright &copy; <a href="http://www.zx.nl">ZXFactory</a> and <a href="http://www.electricmonk.nl">Ferry Boender</a> - 2009.</p>
+			<p>Contact the author by going to this page: <a href="http://www.electricmonk.nl/Contact/HomePage">Contact</a>.</p>
 		</div>
 	</body>
 </html>
