@@ -181,15 +181,17 @@ class Templum {
 		// Parse custom short-hand tags to PHP code.
 		$contents = str_replace(
 			array(
-				'{{', 
-				'}}', 
-				'[[', 
-				']]'),
+				"{{", 
+				"}}\n", 
+				"}}", 
+				"[[", 
+				"]]"),
 			array(
-				'<?php echo(htmlentities(', 
-				')); ?>',
-				'<?php ',
-				' ?>',
+				"<?php echo(htmlentities(", 
+				")); ?>\n\n",
+				")); ?>",
+				"<?php ",
+				" ?>",
 				),
 			$contents
 		);
