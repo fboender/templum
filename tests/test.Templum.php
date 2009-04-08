@@ -94,16 +94,23 @@ class TestTemplate {
 		);
 	}
 
+	public function Render_Newline($test) {
+		$one = 'one';
+		$tpl = $this->templum->template('Render_Newline');
+		$out = $tpl->render(compact($one));
+		$test->assert($out == "one\ntwo\nthree\n");
+	}
+
 	public function Template_Function($test) {
 		// Test if a function in a template doesn't cause errors when we define
 		// it twice
 		$templum = new Templum($this->templatePath, array());
 		$tpl = $templum->template('Template_Function');
 		$out = $tpl->render();
-		$test->assert($out == 'in someFunction');
+		$test->assert($out == "in someFunction\n");
 		$tpl = $templum->template('Template_Function');
 		$out = $tpl->render();
-		$test->assert($out == 'in someFunction');
+		$test->assert($out == "in someFunction\n");
 	}
 
 	public function Namespace_Simple($test) {
