@@ -23,7 +23,7 @@ if (!function_exists('helperBtnAction')) {
          </tr>
          @foreach ($accounts as $account):
             <tr>
-               <td>{{helperBtnAction('account.edit', $account['id'], 'edit')}}</td>
+               <td>[[helperBtnAction('account.edit', $account['id'], 'edit')]]</td>
                <td>{{$account['username']}}</td>
                <td>{{$account['realname']}}</td>
             </tr>
