@@ -11,7 +11,7 @@ if (!function_exists('helperBtnAction')) {
 
 <p>Hello {{$username}}, here's a list of all the users:</p>
 
-<div id="acocunts">
+<div id="accounts">
    @if (count($accounts) <= 0):
       No accounts found.
    @else:
