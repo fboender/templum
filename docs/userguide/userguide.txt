@@ -80,29 +80,86 @@ include::list.tpl[]
 
 === Variables ===
 
-Templum maintains three types of variables:
+Variables can be easily used in your templates. Templum provides three types
+of variables:
 
-Universal Variables::
-  The universal variables are set when you create Templum class instances
-  (using the $varsUniversal parameter). These variables are automatically made
-  available in every template created using the Templum instance. You can set
-  additional Universal variables using the +Templum->setVar()+ method.
+==== Universal Variables: ====
 
-Global Variables::
-  The global variables are set using the +$varsGlobal+ parameter when you ask
-  the Templum class for a template using +Templum->template()+ method. Global
-  variables will be available to the retrieved template and any templates
-  included by that template. Additional global variables can be set using the
-  +TemplumTemplate->setVar()+ method on templates.
+Universal variables are set in the main Templum template engine class, and are
+available in all the templates retrieved using the main engine.
 
-Local Variables::
-  The Local variables are set when rendering the template by specifying the
-  +$varsLocal+ parameter to the +TemplumTemplate->render()+ method. The Local
-  variables will only be available to the template being rendered.
+Universal variables can be set when creating the Templum object instance, by
+passing an array with key/value pairs to the $varsUniveral parameter. For
+example:
 
-An example of specifying Universal variables:
+------------------------------------------------------------------------
+$templum = new Templum('view', array(
+    'username'=>'jjohnson',
+	'realname'=>'John Johnson')
+;
+------------------------------------------------------------------------
 
-$templum = new Templum('view', array('username'=>'jjohnson'));
+This makes the value 'jjohnson' available in your templates under the
+variablename +$username+.
+
+Instead of manually building the array of key/value names, you can also use the
+PHP +compact()+ function. This function takes strings as parameters and then
+creates an key/value array of these variables and their values. The variables
+have to be defined in the local scope for this. Example:
+
+------------------------------------------------------------------------
+$username = 'jjohnson';
+$realname = 'John Johnson';
+
+$variables = compact('username', 'realname');
+
+var_dump($variables);
+// Output:
+//   array(2) {
+//     ["username"]=>
+//     string(8) "jjohnson"
+//     ["realname"]=>
+//     string(12) "John Johnson"
+//   }
+
+$templum = new Templum('view', compact('username', 'realname'));
+------------------------------------------------------------------------
+
+You can set additional Universal variables using the +Templum->setVar()+
+method of the Templum class. The +setVar()+ method takes two parameters:
++$varName+ and +$varValue+. For example:
+
+------------------------------------------------------------------------
+$templum->setVar('email', 'j.johnson@example.com');
+------------------------------------------------------------------------
+
+==== Global Variables: ====
+
+Global variables are available to a single template, and any templates that are
+included by that template. They are set when retrieving a template by passing
+an key/value array to the +$varsGlobal+ parameter of the +Templum->template()+
+method. Example:
+
+------------------------------------------------------------------------
+$templum->template('account/info', array(''=>'');
+------------------------------------------------------------------------
+
+the retrieved template and any templates
+included by that template. Additional global variables can be set using the
++TemplumTemplate->setVar()+ method on templates.
+
+Global variables 
+The global variables are set using the +$varsGlobal+ parameter when you ask the
+Templum class for a template using +Templum->template()+ method. Global
+variables will be available to the retrieved template and any templates
+included by that template. Additional global variables can be set using the
++TemplumTemplate->setVar()+ method on templates.
+
+==== Local Variables ====
+
+The Local variables are set when rendering the template by specifying the
++$varsLocal+ parameter to the +TemplumTemplate->render()+ method. The Local
+variables will only be available to the template being rendered.
 
 An easy way to pass variables is the PHP +compact()+ function. It takes a list
 a variable names as strings, and then looks at the current scope and creates an
