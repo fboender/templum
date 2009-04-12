@@ -159,7 +159,6 @@ class TestTemplate {
 			$test->passed();
 		}
 	}
-
 }
 
 $tester = new UnitTest('Templum', new TestTemplate());
