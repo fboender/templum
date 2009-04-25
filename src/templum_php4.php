@@ -25,6 +25,7 @@
  * 
 */
 
+
 /**
  * @brief Templum Templating Engine.
  * 
@@ -39,7 +40,7 @@ class Templum {
 	 * @param $locale (string) The locale for the templates to retrieve. If a file with the suffix noted in $locale is available, it will be returned instead of the default .tpl file.
 	 * @throw TemplumError if the $templatePath can't be found or isn't a directory.
 	 */
-	function Templum($templatePath, $varsUniversal = array(), $locale = NULL) {
+	 function Templum($templatePath, $varsUniversal = array(), $locale = NULL) {
 		if (!file_exists($templatePath)) {
 			die("No such file or directory: $templatePath");
 		}
@@ -49,6 +50,7 @@ class Templum {
 		$this->templatePath = rtrim($templatePath, '/');
 		$this->varsUniversal = $varsUniversal;
 		$this->locale = $locale;
+		$this->autoEscape = True;
 		$this->cache = array();
 	}
 
@@ -57,19 +59,32 @@ class Templum {
 	 * @param $varName (string) The name of the variable. This will become available in the template as $VARNAME.
 	 * @param $varValue (mixed) The value of the variable.
 	 */
-	function setVar($varName, $varValue) {
+	 function setVar($varName, $varValue) {
 		$this->varsUniversal[$varName] = $varValue;
+	}
+
+	/**
+	 * @brief Turn the auto escape on or off. If on, all content rendered using {{ and }} will automatically be escaped with htmlentities().
+	 * @param $escape (boolean) True of False. If True, auto escaping is turned on (this is the default). If False, it is turned off for templates retrieved with this Templum engine.
+	 * @note Auto escaping can be overridden by passing the $autoEscape option to the template() and templateFromString() methods.
+	 */
+	 function setAutoEscape($escape = True) {
+		$this->autoEscape = $escape;
 	}
 
 	/**
 	 * @brief Retrieve a template by from disk (caching it in memory for the duration of the Templum instance lifetime) or from cache.
 	 * @param $path (string) TemplumTemplate path, without the .tpl extension, relative to the templatePath.
 	 * @param $varsGlobal (array) Array of key/value pairs that will be exported to the returned template and all templates included by that template.
+	 * @param $autoEscape (boolean) Whether to auto escape {{ and }} output with htmlentities()
 	 * @throw TemplumError if the template couldn't be read.
 	 */
-	function template($path, $varsGlobal = array()) {
+	 function template($path, $varsGlobal = array(), $autoEscape = Null) {
 		$fpath = $this->templatePath . '/' . trim($path, '/').'.tpl';
-		
+		if ($autoEscape === Null) {
+			$autoEscape = $this->autoEscape;
+		}
+
 		// Check for translated version of this template.
 		if (!empty($this->locale)) {
 			// Check if the translated template exists in the cache. If it
@@ -104,7 +119,7 @@ class Templum {
 		$template = new TemplumTemplate(
 				$this,
 				$fpath,
-				$this->compile(file_get_contents($fpath)), 
+				$this->compile(file_get_contents($fpath), $autoEscape), 
 				array_merge($this->varsUniversal, $varsGlobal)
 			);
 		$this->cache[$fpath] = $template;
@@ -119,14 +134,19 @@ class Templum {
 	 * no including from the template, no translations, no caching, etc.
 	 *
 	 * @param $contents (string) The template contents.
+	 * @param $autoEscape (boolean) Whether to auto escape {{ and }} output with htmlentities()
 	 * @returns (TemplumTemplate) TemplumTemplate class instance.
 	 */
-	function templateFromString($contents) {
+	 function templateFromString($contents, $autoEscape = Null) {
+		if ($autoEscape === Null) {
+			$autoEscape = $this->autoEscape;
+		}
+
 		// Load the base or translated template.
 		$template = new TemplumTemplate(
 				NULL,
 				"FROM_STRING",
-				Templum::compile($contents), 
+				$this->compile($contents, $autoEscape), 
 				array()
 			);
 		return($template);
@@ -135,21 +155,24 @@ class Templum {
 	/**
 	 * @brief Compile a template string to PHP code.
 	 * @param $contents (string) String to compile to PHP code.
+	 * @param $autoEscape (boolean) Whether to auto escape {{ and }} output with htmlentities()
 	 * @note This method is used by the Templum class itself, and shouldn't be called directly yourself. Use templateFromString() instead.
 	 */
-	function compile($contents) {
+	 function compile($contents, $autoEscape = True) {
 		// Parse custom short-hand tags to PHP code.
 		$contents = str_replace(
 			array(
-				'{{', 
-				'}}', 
-				'[[', 
-				']]'),
+				"{{", 
+				"}}\n", 
+				"}}", 
+				"[[", 
+				"]]"),
 			array(
-				'<?php echo(htmlentities(', 
-				')); ?>',
-				'<?php ',
-				' ?>',
+				$autoEscape ? "<?php echo(htmlentities(" : "<?php echo(", 
+				$autoEscape ? ")); ?>\n\n" : "); ?>\n\n",
+				$autoEscape ? ")); ?>" : "); ?>",
+				"<?php ",
+				" ?>",
 				),
 			$contents
 		);
@@ -174,7 +197,7 @@ class TemplumTemplate {
 	 * @param $contents (string) The compiled contents of this template.
 	 * @param $varsGlobal (array) An array of key/value pairs which represent the global variables for this template and the templates it includes.
 	 */
-	function TemplumTemplate($templum, $filename, $contents, $varsGlobal = array()) {
+	 function TemplumTemplate($templum, $filename, $contents, $varsGlobal = array()) {
 		$this->templum = $templum;
 		$this->filename = $filename;
 		$this->contents = $contents;
@@ -186,7 +209,7 @@ class TemplumTemplate {
 	 * @param $varName (string) The name of the variable.
 	 * @param $varValue (mixed) The value of the variable.
 	 */
-	function setVar($varName, $varValue) {
+	 function setVar($varName, $varValue) {
 		$this->varsGlobal[$varName] = $varValue;
 	}
 
@@ -195,7 +218,7 @@ class TemplumTemplate {
 	 * @param $varsLocal (array) An array of key/value pairs which represent the local variables for this template. 
 	 * @return (string) The rendered contents of the template.
 	 */
-	function render($varsLocal = array()) {
+	 function render($varsLocal = array()) {
 		// Extract the Universal (embedded in global), Global and
 		// Localvariables into the current scope.
 		extract($this->varsGlobal);
@@ -225,9 +248,9 @@ class TemplumTemplate {
 	 * @param $string (string) Error message
 	 * @param $file (string) Filename of the file in which the erorr occurred.
 	 * @param $line (int) Linenumber of the line on which the error occurred.
-	 * @note Do not call this yourself. It is used internally by Templum but must be public.
+	 * @note Do not call this yourself. It is used internally by Templum but must be .
 	 */
-	function errorHandler($nr, $string, $file, $line) {
+	 function errorHandler($nr, $string, $file, $line) {
 		// We can restore the old error handler, otherwise this error handler
 		// will stay active because we throw an exception below.
 		restore_error_handler();
@@ -243,7 +266,7 @@ class TemplumTemplate {
 
 
 	/* LEFTOFF HERE */
-	function inc($name, $varLocals = array()) {
+	 function inc($name, $varLocals = array()) {
 		if (!isset($this->templateEngine)) {
 			die("Cannot include in TemplumTemplate create from string.");
 		}
