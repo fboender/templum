@@ -101,6 +101,22 @@ class TestTemplate {
 		$test->assert($out == "one\ntwo\nthree\n");
 	}
 
+	public function Render_NoAutoEscapeGlobal($test) {
+		$contents = '<h1>Test</h1>';
+		$this->templum->setAutoEscape(False);
+		$tpl = $this->templum->template('Render_NoAutoEscape');
+		$out = $tpl->render(compact('contents'));
+		$this->templum->setAutoEscape(True);
+		$test->assert($out == "<h1>Test</h1>\n");
+	}
+
+	public function Render_NoAutoEscapeParam($test) {
+		$contents = '<h1>Test</h1>';
+		$tpl = $this->templum->template('Render_NoAutoEscape', False);
+		$out = $tpl->render(compact('contents'));
+		$test->assert($out == "<h1>Test</h1>\n");
+	}
+
 	public function Template_Function($test) {
 		// Test if a function in a template doesn't cause errors when we define
 		// it twice
