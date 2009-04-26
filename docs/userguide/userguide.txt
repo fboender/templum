@@ -1,7 +1,7 @@
 Templum Userguide
 =================
 Ferry Boender
-0.1.0, Apr 26, 2009
+0.2.0, Apr 26, 2009
 :Author Initials: FB
 
 About
@@ -251,10 +251,12 @@ simply handled as a terminal error, and your script will die.
 
 === Internationalisation (I18N) ===
 
-Description of Internationalisation support.
+FIXME: Description of Internationalisation support.
+
+For now, see the +examples/i18n/+ example.
 
 == Security ==
 
-Some explanation about why templum is secure.
+FIXME: Some explanation about why templum is secure.
 
 
