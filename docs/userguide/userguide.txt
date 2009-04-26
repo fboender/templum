@@ -7,12 +7,11 @@ Ferry Boender
 About
 -----
 
-Templum is an extremely lightweight, simple yet powerful and fast
-templating engine for PHP. It re-uses the power of PHP itself for
-rendering templates, but provides additional features making it easier
-to write templating code. Rendering templates using Templum is very
-fast; it approximates native PHP rendering speed for include()
-statements.
+Templum is an extremely lightweight, simple yet powerful and fast templating
+engine for PHP. It re-uses the power of PHP itself for rendering templates, but
+provides additional features making it easier to write templating code.
+Rendering templates using Templum is very fast; it approximates native PHP
+rendering speed for include() statements.
 
 === Features ===
 
@@ -25,6 +24,7 @@ statements.
 - Per-session caching of rendered templates.
 - Security by automatic encoding of HTML entities.
 - Universal, global and local variables.
+- PHP v4 and v5 support.
 
 Usage
 -----
@@ -33,12 +33,12 @@ Usage
 
 Templum consists of two main classes.
 
-+Templum+::
++link:http://templum.electricmonk.nl/docs/api/html/classTemplum.html[Templum]+::
   The Templum class is the main class that facilitates templates. It retrieves
   (translated) templates from disk or cache, compiles them and then returns
   them ready for rendering as a TemplumTemplate class instance.
 
-+TemplumTemplate+::
++link:http://templum.electricmonk.nl/docs/api/html/classTemplumTemplate.html[TemplumTemplate]+::
   TemplumTemplate class instances represent templates ready for rendering by
   your application. They are instantiated by the Templum class, so you
   shouldn't have to create them yourself. They handle the actual rendering of
@@ -46,26 +46,26 @@ Templum consists of two main classes.
   your templates, and has helper functions which can be used from your
   templates to easily include other templates and to render variabels.
 
-Here are some examples of how to use these classes:
-
-FIXME:
+For a complete overview of the API, please see the
+link:http://templum.electricmonk.nl/docs/api/html/index.html[API reference
+documentation].
 
 === Template Language ===
 
 The Templum template language is extremely simple. It re-uses PHP's own
-alternative syntax (FIXME: LINK) for control logic in the templates. Other than
-that it includes some simple special markup that makes it easier to write
-templates:
+link:http://nl2.php.net/alternative_syntax[alternative syntax] for control
+logic in the templates. It includes some simple special markup that makes it
+easier to write templates:
 
 +{{+ and +}}+::
 	Echo's the variable, function or other PHP printables between the
 	accolades. Echo'ed contents is automatically escaped using
-	+htmlentities()+.
+	+htmlentities()+ (can be turned off).
 +[[+ and +]]+::
 	Execute the PHP code between the brackets.
 +@line+::
-	|An +at+ at the beginning of the line (prepended whitespace is allowed)
-	will cause the entire line to be executed as PHP code.
+	An +at+ sign (@) at the beginning of the line (prepended whitespace is
+	allowed) will cause the entire line to be executed as PHP code.
 
 It is recommended to use the Alternative PHP syntax for control structures
 (+if+, +while+, +for+, etc) as it greatly enhances the readability of your
@@ -216,6 +216,8 @@ print($template->render(compact('users')));
 
 === Errors ===
 
+==== PHP5 ====
+
 The two classes +Templum+ and +TemplumTemplate+ both have their own Exception
 class:
 
@@ -232,11 +234,19 @@ class:
 Fatal errors that occur during template rendering cannot be intercepted by
 Templum, and therefor show normal PHP errors.
 
+Please see the API documentation for information on which methods throw which
+exceptions.
+
+==== PHP 4 ====
+
+The PHP v4 support for errors in Templum is rather limited. Everything is
+simply handled as a terminal error, and your script will die.
+
 === Internationalisation (I18N) ===
 
 Description of Internationalisation support.
 
-=== Security ===
+== Security ==
 
 Some explanation about why templum is secure.
 

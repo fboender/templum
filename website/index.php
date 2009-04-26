@@ -32,10 +32,11 @@
 				<li>Per-session caching of rendered templates.</li>
 				<li>Security by automatic encoding of HTML entities.</li>
 				<li>Universal, global and local variables.</li>
+				<li> PHP v4 and v5 support.</li>
 			</ul>
 			<p>Templum's template syntax has the following features:</p>
 			<ul>
-				<li><tt>{{</tt> and <tt>}}</tt><br />Echo's the variable, function or other PHP printables between the accolades. Echo'ed contents is automatically escaped using <tt>htmlentities()</tt>.</li>
+				<li><tt>{{</tt> and <tt>}}</tt><br />Echo's the variable, function or other PHP printables between the accolades. Echo'ed contents is automatically escaped using <tt>htmlentities()</tt> (can be turned off).</li>
 				<li><tt>[[</tt> and <tt>]]</tt><br />Start a PHP code block.</li>
 				<li><tt>@line</tt><br />Interpret a line starting with an at-sign as a line of PHP code.</li>
 			</ul>

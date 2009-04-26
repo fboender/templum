@@ -2,7 +2,7 @@
 
 require_once('templum.php');
 
-// Dafine some data. This might as well have come from a database.
+// Define some data. This might as well have come from a database.
 $username = 'jjohnson';
 $accounts = array(
    array('id'=>1, 'username'=>'jjohnson',  'realname'=>'John Johnson'),
@@ -21,4 +21,5 @@ $templum->setVar('username', $username);
 // variable and $username as a universal variable.
 $tpl = $templum->template('account/list');
 print($tpl->render(compact('accounts')));
+
 ?>
