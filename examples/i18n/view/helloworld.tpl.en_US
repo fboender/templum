@@ -1,0 +1,3 @@
+Hello, {{$fullname}}!
+
+Welcome to this 'Hello, world!' example.
