@@ -1,0 +1,2 @@
+description: Build documentation
+require: docs.api, docs.userguide
