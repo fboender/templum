@@ -10,7 +10,7 @@ $username = 'jjohnson';     // Currently logged in user (normally from session).
 
 // Create the Templum template engine. The templates live in the 'view'
 // directory. We pass one universal variable: the application title.
-$templum = new Templum($pathTemplate, compact('appTitle'));
+$templum = new Templum($pathTemplates, compact('appTitle'));
 
 // Turn off automatic escaping of {{ }} contents using htmlentities(). 
 $templum->setAutoEscape(False);
