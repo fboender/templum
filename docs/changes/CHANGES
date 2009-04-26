@@ -2,6 +2,11 @@ v0.2.0
 
 	- PHP 4 support added (patch by Pierre Jochem).
 	- Bugfix (#1): {{$var}} at end-of-line eats newline following it.
+	- Various examples added.
+	- Added the ability to turn off automatic escaping using htmlentities().
+	- Improved the error reporting.
+	- The locale can now be changed after creating a Templum instance.
+	- Userguide updated.
 
 v0.1.0
 
