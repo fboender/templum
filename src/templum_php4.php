@@ -73,6 +73,14 @@ class Templum {
 	}
 
 	/**
+	 * @brief Set the locale for templates.
+	 * @param $locale (string) The locale for the templates to retrieve. If a file with the suffix noted in $locale is available, it will be returned instead of the default .tpl file.
+	 */
+	function setLocale($locale) {
+		$this->locale = $locale;
+	}
+
+	/**
 	 * @brief Retrieve a template by from disk (caching it in memory for the duration of the Templum instance lifetime) or from cache.
 	 * @param $path (string) TemplumTemplate path, without the .tpl extension, relative to the templatePath.
 	 * @param $varsGlobal (array) Array of key/value pairs that will be exported to the returned template and all templates included by that template.
