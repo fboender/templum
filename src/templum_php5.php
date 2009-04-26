@@ -54,7 +54,7 @@ class TemplumError extends Exception {
  */
 class TemplumTemplateError extends Exception {
 	
-	protected $template = Null;
+	protected $template = Null; /**< The TemplumTemplate instance causing the error. */
 
 	/**
 	 * @brief Create a new TemplumTemplateError instance
