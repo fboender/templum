@@ -61,6 +61,8 @@
 
 			<a name="download"><h2>Download</h2></a>
 			<h3>PEAR</h3>
+			<p><i>Notice:</i> If you've got an older version of Templum installed, you must first remove that version using the following command:</p>
+			<pre>pear uninstall channel://__uri/templum-0.1.0</pre>
 			<p>You can directly install Templum from the Internet if you've got PEAR installed with the following command:</p>
 			<pre>pear install http://templum.electricmonk.nl/releases/templum-0.2.0.tgz</pre>
 			<p>You can also download the PEAR package manually and install it with:</p>
