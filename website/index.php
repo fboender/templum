@@ -25,14 +25,14 @@
 
 			<a name="features"><h2>Features</h2></a>
 			<ul>
-				<li>Lightweight. Only a single file; about 120 lines of code (excluding &plusmn;130 lines of API comments).</li>
+				<li>Lightweight. About 140 lines of code (excluding &plusmn;140 lines of API comments).</li>
 				<li>Re-uses PHP <a href="http://php.net/alternative_syntax">alternative syntax</a> for clarity and full power.</li>
 				<li>Very fast. Renders 10,000 templates in <tt>0.741s</tt> (Native PHP takes <tt>0.633s</tt>).</li>
 				<li>I18N (translated) templates.</li>
 				<li>Per-session caching of rendered templates.</li>
 				<li>Security by automatic encoding of HTML entities.</li>
 				<li>Universal, global and local variables.</li>
-				<li> PHP v4 and v5 support.</li>
+				<li>PHP v4 and v5 support.</li>
 			</ul>
 			<p>Templum's template syntax has the following features:</p>
 			<ul>
@@ -62,15 +62,16 @@
 			<a name="download"><h2>Download</h2></a>
 			<h3>PEAR</h3>
 			<p>You can directly install Templum from the Internet if you've got PEAR installed with the following command:</p>
-			<pre>pear install http://templum.electricmonk.nl/releases/templum-0.1.0.tgz</pre>
+			<pre>pear install http://templum.electricmonk.nl/releases/templum-0.2.0.tgz</pre>
 			<p>You can also download the PEAR package manually and install it with:</p>
-			<pre>pear install ./templum-0.1.0.tgz</pre>
-			<p><a href="http://templum.electricmonk.nl/releases/templum-0.1.0.tgz">http://templum.electricmonk.nl/releases/templum-0.1.0.tgz</a></p>
+			<pre>pear install ./templum-0.2.0.tgz</pre>
+			<p><a href="http://templum.electricmonk.nl/releases/templum-0.2.0.tgz">http://templum.electricmonk.nl/releases/templum-0.2.0.tgz</a></p>
 
 			<h3>Source</h3>
 			<p>You can also download a normal source package. These source packages include the documentation and examples for that release.</p>
 			<table class="download">
 				<tr><th>Maturity</th><th>Version</th><th>tar.gz</th></tr>
+				<tr><td class="alpha">Alpha</td><td>v0.2.0</td><td><a href="releases/templum-src-0.2.0.tar.gz">templum-src-0.2.0.tar.gz</a></td></tr>
 				<tr><td class="alpha">Alpha</td><td>v0.1.0</td><td><a href="releases/templum-src-0.1.0.tar.gz">templum-src-0.1.0.tar.gz</a></td></tr>
 			</table>
 
