@@ -15,8 +15,7 @@ rendering speed for include() statements.
 
 === Features ===
 
-- Lightweight. Only a single file; about 120 lines of code (excluding
-  +/- 130 lines of API comments).
+- Lightweight. About 140 lines of code (excluding +/- 140 lines of API comments).
 - Re-uses PHP alternative syntax for clarity and full power.
 - Very fast. Renders 10,000 templates in 0.741s (Native PHP takes
   0.633s).
