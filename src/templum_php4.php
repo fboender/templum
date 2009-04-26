@@ -42,10 +42,10 @@ class Templum {
 	 */
 	 function Templum($templatePath, $varsUniversal = array(), $locale = NULL) {
 		if (!file_exists($templatePath)) {
-			die("No such file or directory: $templatePath");
+			trigger_error("No such file or directory: $templatePath", E_USER_ERROR); die();
 		}
 		if (!is_dir($templatePath)) {
-			die("Not a directory: $templatePath");
+			trigger_error("Not a directory: $templatePath", E_USER_ERROR); die();
 		}
 		$this->templatePath = rtrim($templatePath, '/');
 		$this->varsUniversal = $varsUniversal;
@@ -109,10 +109,10 @@ class Templum {
 
 		// Check if the template exists. 
 		if (!is_file($fpath)) {
-			die("Template not found or not a file: $fpath");
+			trigger_error("Template not found or not a file: $fpath", E_USER_ERROR); die();
 		}
 		if (!is_readable($fpath)) {
-			die("Template not readable: $fpath");
+			trigger_error("Template not readable: $fpath", E_USER_ERROR); die();
 		}
 
 		// Load the base or translated template.
@@ -261,14 +261,14 @@ class TemplumTemplate {
 		ob_end_clean();
 
 		// Throw the exception
-		die("$string (file: {$this->filename}, line $line)");
+		trigger_error("$string (file: {$this->filename}, line $line)", E_USER_ERROR); die();
 	}
 
 
 	/* LEFTOFF HERE */
 	 function inc($name, $varLocals = array()) {
 		if (!isset($this->templateEngine)) {
-			die("Cannot include in TemplumTemplate create from string.");
+			trigger_error("Cannot include in TemplumTemplate create from string.", E_USER_ERROR); die();
 		}
 		$template = $this->templateEngine->template($name, $this->varsGlobal);
 		return($template->render());
