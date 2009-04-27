@@ -64,7 +64,7 @@ class Templum {
 	}
 
 	/**
-	 * @brief Turn the auto escape on or off. If on, all content rendered using {{ and }} will automatically be escaped with htmlentities().
+	 * @brief Turn the auto escape on or off. If on, all content rendered using {{ and }} will automatically be escaped with htmlspecialchars().
 	 * @param $escape (boolean) True of False. If True, auto escaping is turned on (this is the default). If False, it is turned off for templates retrieved with this Templum engine.
 	 * @note Auto escaping can be overridden by passing the $autoEscape option to the template() and templateFromString() methods.
 	 */
@@ -84,7 +84,7 @@ class Templum {
 	 * @brief Retrieve a template by from disk (caching it in memory for the duration of the Templum instance lifetime) or from cache.
 	 * @param $path (string) TemplumTemplate path, without the .tpl extension, relative to the templatePath.
 	 * @param $varsGlobal (array) Array of key/value pairs that will be exported to the returned template and all templates included by that template.
-	 * @param $autoEscape (boolean) Whether to auto escape {{ and }} output with htmlentities()
+	 * @param $autoEscape (boolean) Whether to auto escape {{ and }} output with htmlspecialchars()
 	 * @throw TemplumError if the template couldn't be read.
 	 */
 	 function template($path, $varsGlobal = array(), $autoEscape = Null) {
@@ -142,7 +142,7 @@ class Templum {
 	 * no including from the template, no translations, no caching, etc.
 	 *
 	 * @param $contents (string) The template contents.
-	 * @param $autoEscape (boolean) Whether to auto escape {{ and }} output with htmlentities()
+	 * @param $autoEscape (boolean) Whether to auto escape {{ and }} output with htmlspecialchars()
 	 * @returns (TemplumTemplate) TemplumTemplate class instance.
 	 */
 	 function templateFromString($contents, $autoEscape = Null) {
@@ -163,7 +163,7 @@ class Templum {
 	/**
 	 * @brief Compile a template string to PHP code.
 	 * @param $contents (string) String to compile to PHP code.
-	 * @param $autoEscape (boolean) Whether to auto escape {{ and }} output with htmlentities()
+	 * @param $autoEscape (boolean) Whether to auto escape {{ and }} output with htmlspecialchars()
 	 * @note This method is used by the Templum class itself, and shouldn't be called directly yourself. Use templateFromString() instead.
 	 */
 	 function compile($contents, $autoEscape = True) {
@@ -176,7 +176,7 @@ class Templum {
 				"[[", 
 				"]]"),
 			array(
-				$autoEscape ? "<?php echo(htmlentities(" : "<?php echo(", 
+				$autoEscape ? "<?php echo(htmlspecialchars(" : "<?php echo(", 
 				$autoEscape ? ")); ?>\n\n" : "); ?>\n\n",
 				$autoEscape ? ")); ?>" : "); ?>",
 				"<?php ",

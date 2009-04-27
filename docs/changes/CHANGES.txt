@@ -1,3 +1,8 @@
+v0.3.0
+
+	- htmlspecialchars() is now used instead of htmlentities() for better
+	  encoding support.
+
 v0.2.0
 
 	- PHP 4 support added (patch by Pierre Jochem).

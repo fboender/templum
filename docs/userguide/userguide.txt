@@ -66,7 +66,7 @@ easier to write templates:
 +{{+ and +}}+::
 	Echo's the variable, function or other PHP printables between the
 	accolades. Echo'ed contents is automatically escaped using
-	+htmlentities()+ (can be turned off).
+	+htmlspecialchars()+ (can be turned off).
 +[[+ and +]]+::
 	Execute the PHP code between the brackets.
 +@line+::

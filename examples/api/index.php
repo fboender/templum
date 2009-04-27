@@ -12,7 +12,7 @@ $username = 'jjohnson';     // Currently logged in user (normally from session).
 // directory. We pass one universal variable: the application title.
 $templum = new Templum($pathTemplates, compact('appTitle'));
 
-// Turn off automatic escaping of {{ }} contents using htmlentities(). 
+// Turn off automatic escaping of {{ }} contents using htmlspecialchars(). 
 $templum->setAutoEscape(False);
 
 // Set another universal variable.

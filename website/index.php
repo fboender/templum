@@ -36,7 +36,7 @@
 			</ul>
 			<p>Templum's template syntax has the following features:</p>
 			<ul>
-				<li><tt>{{</tt> and <tt>}}</tt><br />Echo's the variable, function or other PHP printables between the accolades. Echo'ed contents is automatically escaped using <tt>htmlentities()</tt> (can be turned off).</li>
+				<li><tt>{{</tt> and <tt>}}</tt><br />Echo's the variable, function or other PHP printables between the accolades. Echo'ed contents is automatically escaped using <tt>htmlspecialchars()</tt> (can be turned off).</li>
 				<li><tt>[[</tt> and <tt>]]</tt><br />Start a PHP code block.</li>
 				<li><tt>@line</tt><br />Interpret a line starting with an at-sign as a line of PHP code.</li>
 			</ul>
