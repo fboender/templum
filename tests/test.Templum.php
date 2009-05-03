@@ -7,19 +7,19 @@ require_once('class.UnitTest.php');
 require_once('../src/templum.php');
 
 class TestTemplate {
-	 private $templatePath = './test_data/templates/';
+	private $templatePath = './test_data/templates/';
 
-	 public function Engine_Create($test) {
+	public function Engine_Create($test) {
 		// Test if we can create a new template engine.
 		$this->templum = new Templum($this->templatePath);
 	}
 
-	 public function Engine_GetTemplate($test) {
+	public function Engine_GetTemplate($test) {
 		// Test if we can retrieve a template.
 		$tpl = $this->templum->template('Engine_GetTemplate');
 	}
 
-	 public function Engine_Cache($test) {
+	public function Engine_Cache($test) {
 		// Test whether the cache is working. It should return the same object
 		// instance for the same templates.
 		$tpl1 = $this->templum->template('Engine_GetTemplate');
@@ -28,7 +28,7 @@ class TestTemplate {
 		$test->assert($tpl1 === $tpl2);
 	}
 
-	 public function Engine_CacheI18N($test) {
+	public function Engine_CacheI18N($test) {
 		// Test whether the cache is working for translated pages. It should
 		// return the same object instance for the same template.
 		$language = 'en_US';
@@ -40,21 +40,21 @@ class TestTemplate {
 		$test->assert($tpl1 === $tpl2);
 	}
 
-	 public function Render_Basic($test) {
+	public function Render_Basic($test) {
 		// Check if the basic rendering is working.
 		$tpl = $this->templum->template('Render_Basic');
 		$out = $tpl->render();
 		$test->assert(strpos($out, 'test1') !== False);
 	}
 
-	 public function Render_Accolade($test) {
+	public function Render_Accolade($test) {
 		// Check if the rendering of {{$var}} works.
 		$tpl = $this->templum->template('Render_Accolade');
 		$out = $tpl->render(array('name'=>'ferry'));
 		$test->assert(strpos($out, 'ferry') !== False);
 	}
 
-	 public function Render_AtLine($test) {
+	public function Render_AtLine($test) {
 		// Check if the rendering of the @line syntax works.
 		$names = array(
 			'ferry',
@@ -70,14 +70,14 @@ class TestTemplate {
 		);
 	}
 	
-	 public function Render_BlockParen($test) {
+	public function Render_BlockParen($test) {
 		// Test if we can render block parenthesis content.
 		$tpl = $this->templum->template('Render_BlockParen');
 		$out = $tpl->render();
 		assert($out == "\nXXSomething!XX\n");
 	}
 
-	 public function Render_Full($test) {
+	public function Render_Full($test) {
 		// Test a template that does everything the template engine can handle.
 		$username = 'fboender';
 		$users = array(
@@ -94,14 +94,14 @@ class TestTemplate {
 		);
 	}
 
-	 public function Render_Newline($test) {
+	public function Render_Newline($test) {
 		$one = 'one';
 		$tpl = $this->templum->template('Render_Newline');
 		$out = $tpl->render(compact($one));
 		$test->assert($out == "one\ntwo\nthree\n");
 	}
 
-	 public function Render_NoAutoEscapeGlobal($test) {
+	public function Render_NoAutoEscapeGlobal($test) {
 		$contents = '<h1>Test</h1>';
 		$this->templum->setAutoEscape(False);
 		$tpl = $this->templum->template('Render_NoAutoEscape');
@@ -110,14 +110,14 @@ class TestTemplate {
 		$test->assert($out == "<h1>Test</h1>\n");
 	}
 
-	 public function Render_NoAutoEscapeParam($test) {
+	public function Render_NoAutoEscapeParam($test) {
 		$contents = '<h1>Test</h1>';
 		$tpl = $this->templum->template('Render_NoAutoEscape', False);
 		$out = $tpl->render(compact('contents'));
 		$test->assert($out == "<h1>Test</h1>\n");
 	}
 
-	 public function Template_Function($test) {
+	public function Template_Function($test) {
 		// Test if a public function in a template doesn't cause errors when we define
 		// it twice
 		$templum = new Templum($this->templatePath, array());
@@ -129,7 +129,7 @@ class TestTemplate {
 		$test->assert($out == "in someFunction\n");
 	}
 
-	 public function Namespace_Simple($test) {
+	public function Namespace_Simple($test) {
 		// Test if a simple namespace (single dir) works.
 		$templum = new Templum($this->templatePath, array());
 		$tpl = $templum->template('namespace/main');
@@ -137,7 +137,7 @@ class TestTemplate {
 		$test->assert($out == "namespace.main\n");
 	}
 
-	 public function Namespace_Deep($test) {
+	public function Namespace_Deep($test) {
 		// Test if a deeper namespace works.
 		$templum = new Templum($this->templatePath, array());
 		$tpl = $templum->template('namespace/deep/main');
@@ -145,7 +145,7 @@ class TestTemplate {
 		$test->assert($out == "namespace:deep:main\n");
 	}
 
-	 public function I18N_Basic($test) {
+	public function I18N_Basic($test) {
 		// Test if we can retrieve the main version of a template that also has
 		// a translated version.
 		$language = 'standaard'; // Not really a locale, just a test-string.
@@ -155,7 +155,7 @@ class TestTemplate {
 		$test->assert($out == "Dit is een test template in de standaard taal.\n");
 	}
 
-	 public function I18N_Translated($test) {
+	public function I18N_Translated($test) {
 		// Test if we can retrieve a translated version of template given a
 		// certain locale.
 		$language = 'en_US';
@@ -165,7 +165,7 @@ class TestTemplate {
 		$test->assert($out == "This is a test template in the en_US language.\n");
 	}
 
-	 public function Error_Notice($test) {
+	public function Error_Notice($test) {
 		// Test if we can intercept Notice errors in a template.
 		$tpl = $this->templum->template('Error_Notice');
 		try {
