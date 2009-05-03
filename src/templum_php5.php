@@ -98,7 +98,7 @@ class Templum {
 		if (!is_dir($templatePath)) {
 			throw new TemplumError("Not a directory: $templatePath", 2);
 		}
-		$this->templatePath = rtrim($templatePath, '/');
+		$this->templatePath = rtrim(realpath($templatePath), '/');
 		$this->varsUniversal = $varsUniversal;
 		$this->locale = $locale;
 		$this->autoEscape = True;
@@ -150,20 +150,26 @@ class Templum {
 			// does, returned the cached result. Otherwise check the disk for
 			// the translated template.
 			$fpathTrans = realpath($fpath.'.'.$this->locale);
-			if (array_key_exists($fpathTrans, $this->cache)) {
-				return($this->cache[$fpathTrans]);
-			} else {
-				if (file_exists($fpathTrans)) {
-					$fpath = $fpathTrans;
+			if ($fpathTrans !== False) {
+				if (array_key_exists($fpathTrans, $this->cache)) {
+					return($this->cache[$fpathTrans]);
+				} else {
+					if (file_exists($fpathTrans)) {
+						$fpath = $fpathTrans;
+					}
 				}
 			}
 		// Check the non-translated version of this template
 		} else {
 			// Check the cache for the non-translated template. 
-			$fpath = realpath($fpath);
-			if (array_key_exists($fpath, $this->cache)) {
-				return($this->cache[$fpath]);
+			$rpath = realpath($fpath);
+			if($rpath === False) {
+				throw new TemplumError("Template not found or not a file: $fpath", 3);
 			}
+			if (array_key_exists($rpath, $this->cache)) {
+				return($this->cache[$rpath]);
+			}
+			$fpath = $rpath;
 		}
 
 		// Check if the template exists. 
