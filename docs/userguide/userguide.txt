@@ -91,23 +91,56 @@ of variables:
 
 ==== Universal Variables: ====
 
-Universal variables are set in the main Templum template engine class, and are
-available in all the templates retrieved using the main engine.
+Universal variables are variables which will be made available to all the
+templates you retrieve via a single Templum instance. They are mostly useful
+for variables which need to be available in your entire application, such as
+the name of the current user, the application's title, the currently active
+controller, etc. Naturally you can also assign a helper class which can render
+common elements of your User Interface to a universal variable and use that
+from your templates.
 
-Universal variables can be set when creating the Templum object instance, by
-passing an array with key/value pairs to the $varsUniveral parameter. For
-example:
+Universal variables are set in the constructor of the main Templum template
+engine class, or at a later stage using the +setVar()+ method on the Templum
+instance. All templates you retrieve via this Templum instance will have the
+variables set.
+
+An example:
 
 ------------------------------------------------------------------------
-$templum = new Templum('view', array(
-    'username'=>'jjohnson',
-	'realname'=>'John Johnson')
-;
+<?php
+
+require_once('templum.php');
+
+// Define some universal variables
+$appTitle = 'My First App';
+$username = 'fboender';
+$uiElements = new UIElements(); // Helper class
+
+// Create the Templum instance and the universal $appTitle variable.
+$templum = new Templum('view', compact('appTitle'));
+// Add some more universal variables.
+$templum->setVar('username', $username);
+$templum->setVar('uiElements', $uiElements);
+
+// Retrieve three templates. $username, $appTitle and $uiElements will be
+// available in all three templates.
+$tmplHeader = $templum->template('header');
+$tmplContent = $templum->template('todo/list');
+$tmplFooter = $templum->template('footer');
+
+echo($tmplHeader->render() . $tmplContent->render() . $tmplFooter->render());
+
+?>
 ------------------------------------------------------------------------
 
-This makes the value 'jjohnson' available in your templates under the
-variablename +$username+.
+The example above defines three variables: +$appTitle+, +$username+ and
++$uiElements+. It creates a new Templum instance, and immediately passes
++$appTitle+ as a universal variable. It then sets two more universal variables
++$username+ and +$uiElements+. All three of these variables are now available
+in every template you retrieve using the Templum instance +$templum+.
 
+FIXME:
+The +compact()+ function ...
 Instead of manually building the array of key/value names, you can also use the
 PHP +compact()+ function. This function takes strings as parameters and then
 creates an key/value array of these variables and their values. The variables
