@@ -175,23 +175,17 @@ $templum->setVar('email', 'j.johnson@example.com');
 ==== Global Variables: ====
 
 Global variables are available to a single template, and any templates that are
-included by that template. They are set when retrieving a template by passing
-an key/value array to the +$varsGlobal+ parameter of the +Templum->template()+
-method. Example:
+included by that template. 
+The global variables are set using the +$varsGlobal+ parameter when you ask the
+Templum class for a template using +Templum->template()+ method. Global
+variables will be available to the retrieved template and any templates
+included by that template. Example:
 
 ------------------------------------------------------------------------
 $templum->template('account/info', array(''=>'');
 ------------------------------------------------------------------------
 
-the retrieved template and any templates
-included by that template. Additional global variables can be set using the
-+TemplumTemplate->setVar()+ method on templates.
-
-Global variables 
-The global variables are set using the +$varsGlobal+ parameter when you ask the
-Templum class for a template using +Templum->template()+ method. Global
-variables will be available to the retrieved template and any templates
-included by that template. Additional global variables can be set using the
+Additional global variables can be set using the
 +TemplumTemplate->setVar()+ method on templates.
 
 ==== Local Variables ====
