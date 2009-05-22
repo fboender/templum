@@ -54,7 +54,7 @@ class TemplumError extends Exception {
  */
 class TemplumTemplateError extends Exception {
 	
-	protected $template = Null; /**< The TemplumTemplate instance causing the error. */
+	protected $template = NULL; /**< The TemplumTemplate instance causing the error. */
 
 	/**
 	 * @brief Create a new TemplumTemplateError instance
@@ -62,14 +62,14 @@ class TemplumTemplateError extends Exception {
 	 * @param $code (int) The error code
 	 * @param $template (TemplumTemplate) The template containing the error.
 	 */
-	public function TemplumTemplateError($message, $code = 0, $template = Null) {
+	public function TemplumTemplateError($message, $code = 0, $template = NULL) {
 		$this->template = $template;
 		parent::__construct($message, $code);
 	}
 
 	/**
 	 * @brief Return the TemplumTemplate instance that contains the error.
-	 * @return (TemplumTemplate) The template containing the error or Null if not available.
+	 * @return (TemplumTemplate) The template containing the error or NULL if not available.
 	 */
 	public function getTemplate() {
 		return($this->template);
@@ -138,9 +138,9 @@ class Templum {
 	 * @param $autoEscape (boolean) Whether to auto escape {{ and }} output with htmlspecialchars()
 	 * @throw TemplumError if the template couldn't be read.
 	 */
-	public function template($path, $varsGlobal = array(), $autoEscape = Null) {
+	public function template($path, $varsGlobal = array(), $autoEscape = NULL) {
 		$fpath = $this->templatePath . '/' . trim($path, '/').'.tpl';
-		if ($autoEscape === Null) {
+		if ($autoEscape === NULL) {
 			$autoEscape = $this->autoEscape;
 		}
 
