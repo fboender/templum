@@ -164,16 +164,6 @@ class TestTemplum_all {
 		$test->assert($out == "This is a test template in the en_US language.\n");
 	}
 
-	function Error_Notice($test) {
-		// Test if we can intercept Notice errors in a template.
-		//$tpl = $this->templum->template('Error_Notice');
-		//try {
-		//	$out = $tpl->render();
-		//	$test->failed(new Exception('TemplateException not raised'));
-		//} catch (TemplumTemplateError $e) {
-		//	$test->passed();
-		//}
-	}
 }
 
 ?>

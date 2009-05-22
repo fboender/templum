@@ -202,7 +202,7 @@ class UnitTest {
 	 * @note This is also called by the custom error handler, which mimics a thrown exception
 	 * @note You can safely call this method to set the default pass/fail status of a test method and later on in the test mark it as having passed.
 	 */
-	function failed($errmsg, $errcode) {
+	function failed($errmsg, $errcode = 0) {
 		$this->currentTest["passed"] = false;
 		$this->currentTest["result"] .= $errmsg."\n";
 		$this->currentTest["dump"] .= "\n";
