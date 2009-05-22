@@ -25,7 +25,6 @@
  * 
 */
 
-
 /**
  * @brief Templum Templating Engine.
  * 
@@ -47,7 +46,7 @@ class Templum {
 		if (!is_dir($templatePath)) {
 			trigger_error("Not a directory: $templatePath", E_USER_ERROR); die();
 		}
-		$this->templatePath = rtrim($templatePath, '/');
+		$this->templatePath = rtrim(realpath($templatePath), '/');
 		$this->varsUniversal = $varsUniversal;
 		$this->locale = $locale;
 		$this->autoEscape = True;
@@ -87,9 +86,9 @@ class Templum {
 	 * @param $autoEscape (boolean) Whether to auto escape {{ and }} output with htmlspecialchars()
 	 * @throw TemplumError if the template couldn't be read.
 	 */
-	function template($path, $varsGlobal = array(), $autoEscape = Null) {
+	function template($path, $varsGlobal = array(), $autoEscape = NULL) {
 		$fpath = $this->templatePath . '/' . trim($path, '/').'.tpl';
-		if ($autoEscape === Null) {
+		if ($autoEscape === NULL) {
 			$autoEscape = $this->autoEscape;
 		}
 
@@ -99,20 +98,26 @@ class Templum {
 			// does, returned the cached result. Otherwise check the disk for
 			// the translated template.
 			$fpathTrans = realpath($fpath.'.'.$this->locale);
-			if (array_key_exists($fpathTrans, $this->cache)) {
-				return($this->cache[$fpathTrans]);
-			} else {
-				if (file_exists($fpathTrans)) {
-					$fpath = $fpathTrans;
+			if ($fpathTrans !== False) {
+				if (array_key_exists($fpathTrans, $this->cache)) {
+					return($this->cache[$fpathTrans]);
+				} else {
+					if (file_exists($fpathTrans)) {
+						$fpath = $fpathTrans;
+					}
 				}
 			}
 		// Check the non-translated version of this template
 		} else {
 			// Check the cache for the non-translated template. 
-			$fpath = realpath($fpath);
-			if (array_key_exists($fpath, $this->cache)) {
-				return($this->cache[$fpath]);
+			$rpath = realpath($fpath);
+			if($rpath === False) {
+				trigger_error("Template not found or not a file: $fpath", E_USER_ERROR); die();
 			}
+			if (array_key_exists($rpath, $this->cache)) {
+				return($this->cache[$rpath]);
+			}
+			$fpath = $rpath;
 		}
 
 		// Check if the template exists. 
@@ -256,7 +261,7 @@ class TemplumTemplate {
 	 * @param $string (string) Error message
 	 * @param $file (string) Filename of the file in which the erorr occurred.
 	 * @param $line (int) Linenumber of the line on which the error occurred.
-	 * @note Do not call this yourself. It is used internally by Templum but must be .
+	 * @note Do not call this yourself. It is used internally by Templum but must be public.
 	 */
 	function errorHandler($nr, $string, $file, $line) {
 		// We can restore the old error handler, otherwise this error handler
