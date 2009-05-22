@@ -22,12 +22,12 @@
  * 'testNames', it will be used to display pretty names for the methods (tests)
  * in the class. testNames should be public, should be an associative array
  * where the keys match the methodnames  and should look like this: 
- * <tt>public $testNames = array("GroupName_TestName" => "test the foobar", ...); </tt>
+ * <tt>$testNames = array("GroupName_TestName" => "test the foobar", ...); </tt>
  *
  * For each called method in the class to be tested, the first parameter passed
  * to the method will be the Tester class. You can use this to assert things
  * from your test case like this: 
- * <tt>public function MyTestCase($test) { $test->assert(a != b); }</tt>
+ * <tt>function MyTestCase($test) { $test->assert(a != b); }</tt>
  * 
  * You can subdivide test methods in groups by putting underscores in the
  * method names. Methods are called in the order as they appear in the test
@@ -37,27 +37,27 @@
  *
  * @code
  * class TestMe {
- *   public $testNames = array(
+ *   $testNames = array(
  *     "User_Load" => "Load a user",
  *     "User_Save" => "Save a user",
  *     "Grant_User" => "Give rights to a user",
  *     "Grant_Group" => "Give rights to a group",
  *   );
  *  
- *   public function User_Load($test) {
+ *   function User_Load($test) {
  *     $this->user = new MyProgramUser("john");
  *     $test->assert($this->user->getUserId() == "john");
  *   }
- *   public function User_Save($test) {
+ *   function User_Save($test) {
  *     $this->user->save();
  *   }
- *   public function Grant_User($test) {
+ *   function Grant_User($test) {
  *     $this->user->grantPrivilge(READ);
  *   }
- *   public function Grant_Group($test) {
+ *   function Grant_Group($test) {
  *     $this->user->group->grantPrivilge(READ);
  *   }
- *   public function User_Load_NonExisting($test) {
+ *   function User_Load_NonExisting($test) {
  *     // Test PASSES if an error is thrown! (it's supposed to do so)
  *     try {
  *       new MyProgramUser("AmeliaEarhart");
@@ -83,13 +83,13 @@
  */
 class UnitTest {
 
-	protected $appName = "";
-	protected $cnt = 1;
-	protected $testOutput = array();
-	protected $testResults = array();
-	protected $currentTest = array();
-	protected $otherErros = "";
-	protected $prevErrorReporting = NULL;
+	var $appName = "";
+	var $cnt = 1;
+	var $testOutput = array();
+	var $testResults = array();
+	var $currentTest = array();
+	var $otherErros = "";
+	var $prevErrorReporting = NULL;
 
 	/**
 	 * @brief Create a new Unit test controller
@@ -98,9 +98,9 @@ class UnitTest {
 	 * @param $useErrHndl (boolean, true) Wether to use an internal error handler to detect errors and mark the test as failed.
 	 * @warning Make sure to destroy this class when you're done unit testing, or errors will not show up anymore.
 	 */
-	public function __construct($appName, $testClass, $useErrHndl = True) {
+	function UnitTest($appName, $testClass, $useErrHndl = True) {
 		if (!is_object($testClass)) {
-			throw new UnitTestException("\$testClass is not an instantiated object", UnitTestException::NOT_OBJECT);
+			trigger_error("\$testClass is not an instantiated object", E_USER_ERROR); die();
 		}
 		$this->prevErrorReporting = error_reporting(E_ALL);
 		if ($useErrHndl) {
@@ -114,7 +114,7 @@ class UnitTest {
 	/**
 	 * @brief Destructor.
 	 */
-	public function __destruct() {
+	function __destruct() {
 		restore_error_handler();
 		// Do _not_ restore the error level if it wasn't set by us. 
 		if ($this->prevErrorReporting !== NULL) {
@@ -126,12 +126,11 @@ class UnitTest {
 	 * @brief The custom error handler.
 	 * @note DO NOT USE THIS, ITS FOR INTERNAL USE ONLY.
 	 */
-	public function errorHandler($errno, $errmsg, $filename, $linenum, $vars) {
+	function errorHandler($errno, $errmsg, $filename, $linenum, $vars) {
 		if ($this->currentTest == array()) {
 			$this->otherErrors .= "$filename($linenum): Error $errno: '$errmsg'\n";
 		} else {
-			$e = new Exception($errmsg, $errno);
-			$this->failed($e);
+			$this->failed($errmsg, $errno);
 		}
 	}
 
@@ -139,12 +138,14 @@ class UnitTest {
 	 * @brief The custom exception handler. Don't use this.
 	 * @note DO NOT USE THIS, ITS FOR INTERNAL USE ONLY.
 	 */
-	public function exceptionHandler($e) {
-		$this->failed($e);
+	function exceptionHandler($e) {
+		$errmsg = $e->getMessage();
+		$errno = $e->getCode();
+		$this->failed($errmsg, $errno);
 	}
 
-	protected function run($testClass) {
-		$props = get_object_vars($this->testClass);
+	function run($testClass) {
+		$props = get_object_vars($testClass);
 		if (array_key_exists("testNames", $props)) {
 			$hasNames = true;
 		} else {
@@ -164,17 +165,13 @@ class UnitTest {
 
 				// Start the test
 				$this->start($group, $name);
-				try {
-					call_user_func(array($testClass, $method), $this);
-				} catch(Exception $e) {
-					$this->exceptionHandler($e);
-				}
+				$testClass->{$method}($this);
 				$this->end();
 			}
 		}
 	}
 
-	protected function start($testGroup, $testName) {
+	function start($testGroup, $testName) {
 		$this->currentTest = array(
 			"group"  => $testGroup,
 			"nr"     => $this->cnt++,
@@ -188,7 +185,7 @@ class UnitTest {
 	/**
 	 * @brief Mark a single test as having passed. 
 	 */
-	public function passed() {
+	function passed() {
 		$this->currentTest["passed"] = true;
 		$this->currentTest["result"] = "";
 		$this->currentTest["dump"] = "";
@@ -205,37 +202,9 @@ class UnitTest {
 	 * @note This is also called by the custom error handler, which mimics a thrown exception
 	 * @note You can safely call this method to set the default pass/fail status of a test method and later on in the test mark it as having passed.
 	 */
-	public function failed($e) {
+	function failed($errmsg, $errcode) {
 		$this->currentTest["passed"] = false;
-		$this->currentTest["result"] .= $e->getMessage()."\n";
-		$this->currentTest["dump"] .= $e->getMessage()."\n";
-		foreach($e->getTrace() as $stackFrame) {
-			if (array_key_exists("file", $stackFrame)) {
-				$this->currentTest["dump"] .= "  ".
-					$stackFrame["file"] . ":".$stackFrame["line"]." - ";
-					if (array_key_exists("class", $stackFrame)) {
-						$this->currentTest["dump"] .= $stackFrame["class"];
-					}
-					if (array_key_exists("type", $stackFrame)) {
-						$this->currentTest["dump"] .= " ".$stackFrame["type"]." ";
-					}
-					if (array_key_exists("function", $stackFrame)) {
-						$this->currentTest["dump"] .= $stackFrame["function"]."(";
-					}
-					if (array_key_exists("args", $stackFrame) && count($stackFrame["args"] > 0)) {
-						foreach($stackFrame["args"] as $arg) {
-							$this->currentTest["dump"] .= get_class($arg).", ";
-						}
-						if (substr($this->currentTest["dump"], -2) == ", ") {
-							$this->currentTest["dump"] = substr($this->currentTest["dump"], 0, -2);
-						}
-					}
-					if (array_key_exists("function", $stackFrame)) {
-						$this->currentTest["dump"] .= ")";
-					}
-					$this->currentTest["dump"] .= "\n";
-			}
-		}
+		$this->currentTest["result"] .= $errmsg."\n";
 		$this->currentTest["dump"] .= "\n";
 	}
 
@@ -243,20 +212,20 @@ class UnitTest {
 	 * @brief Assert a boolean expression. If it returns 'true', the test will be marked as passed. Otherwise it will be marked as failed.
 	 * @param $bool (Boolean) Boolean result of an expression.
 	 */
-	public function assert($bool) {
+	function assert($bool) {
 		if ($bool) {
 			$this->passed();
 		} else {
-			throw new Exception("Assertion failed");
+			trigger_error("Assertion failed", E_USER_ERROR);
 		}
 	}
 
-	protected function end() {
+	function end() {
 		$this->testResults[] = $this->currentTest;
 		$this->currentTest = array();
 	}
 
-	protected function sortResultsByGroup() {
+	function sortResultsByGroup() {
 		$cmp = create_function('$a,$b', '
 			if ($a["group"] == $b["group"]) {
 				return (0); 
@@ -271,7 +240,7 @@ class UnitTest {
 	 * @param $hidePassed (Boolean) If true, passed tests will not be shown. This is useful when you've got alot of testcases and only want the failed ones to show up.
 	 * @param $sortGroups (Boolean) If true, the results will be sorted by group. Otherwise the results will be listed in the same order they where executed.
 	 */
-	public function getResultsHtml($hidePassed = false, $sortGroups = false) {
+	function getResultsHtml($hidePassed = false, $sortGroups = false) {
 		if ($sortGroups) { 
 			$this->sortResultsByGroup();
 		}
@@ -348,11 +317,12 @@ class UnitTest {
 	 * @param $hidePassed (Boolean) If true, passed tests will not be shown. This is useful when you've got alot of testcases and only want the failed ones to show up.
 	 * @param $sortGroups (Boolean) If true, the results will be sorted by group. Otherwise the results will be listed in the same order they where executed.
 	 */
-	public function getResultsText($hidePassed = false, $sortGroups = false) {
+	function getResultsText($hidePassed = false, $sortGroups = false) {
 		if ($sortGroups) { 
 			$this->sortResultsByGroup();
 		}
 		$fmt = "%s\t%s\t%s\t%s\n";
+		$out = "";
 		foreach ($this->testResults as $result) {
 			if ($result["passed"] == false) {
 				$textResult = "FAILED";
@@ -372,7 +342,7 @@ class UnitTest {
 	 * @param $hidePassed (Boolean) If true, passed tests will not be shown. This is useful when you've got alot of testcases and only want the failed ones to show up.
 	 * @param $sortGroups (Boolean) If true, the results will be sorted by group. Otherwise the results will be listed in the same order they where executed.
 	 */
-	public function getResultsTextPretty($hidePassed = false, $sortGroups = false) {
+	function getResultsTextPretty($hidePassed = false, $sortGroups = false) {
 		if ($sortGroups) { 
 			$this->sortResultsByGroup();
 		}

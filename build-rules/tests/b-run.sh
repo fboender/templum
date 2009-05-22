@@ -1,4 +1,5 @@
 #!/bin/sh
 
 cd tests/
-./test.Templum.php
+php5 ./test.php
+php4 ./test.php
