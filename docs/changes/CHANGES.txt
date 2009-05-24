@@ -2,6 +2,11 @@ v0.3.0
 
 	- htmlspecialchars() is now used instead of htmlentities() for better
 	  encoding support.
+	- Documentation improvements.
+	- Implemented inheritance.
+	- Added a TEMPLUM_VERSION constant for easy version reference.
+	- Bugfix (#7): array_key_exists error on newer versions of PHP fixed.
+	- Bugfix: realpath() problem fixed.
 
 v0.2.0
 

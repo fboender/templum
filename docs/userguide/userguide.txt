@@ -1,7 +1,7 @@
 Templum Userguide
 =================
 Ferry Boender
-0.2.0, Apr 26, 2009
+0.3.0, May 24, 2009
 :Author Initials: FB
 
 About
@@ -21,6 +21,7 @@ rendering speed for include() statements.
   0.633s).
 - I18N (translated) templates.
 - Per-session caching of rendered templates.
+- Inheritance.
 - Security by automatic encoding of HTML entities.
 - Universal, global and local variables.
 - PHP v4 and v5 support.
@@ -246,6 +247,90 @@ $template->setVar('controllerTarget', $controllerTarget);
 // Local variable '$users'
 print($template->render(compact('users')));
 ------------------------------------------------------------------------
+
+=== Inheritance ===
+
+Templum features a simple template inheritance scheme which allows a template
+to inherit from a generic parent template. This works by defining blocks in the
+parent template which can be overridden by a child template. The inheritance
+makes it very easy to create a generic layout template which is then filled in
+by various child templates. The child templates can themselves determine
+whether they want to be embedded in the generic layout template, making it esay
+to create multiple different layouts.
+
+Here's an example. First we define a parent template with a generic layout and
+two blocks: a subtitle and the contents:
+
+------------------------------------------------------------------------
+<h1>Title</h1>
+<h2>[: block subtitle :]Parent template[: endblock :]</h2>
+
+<div id="contents">
+[: block contents :]This is the parent contents.[: endblock :]
+</div>
+------------------------------------------------------------------------
+
+Next we define a child template which inherits from the template called
+'parent' and which then overrides the subtitle and contents blocks:
+
+------------------------------------------------------------------------
+[[ $this->inherit('parent'); ]]
+[: block subtitle :]child template.[: endblock :]
+[: block contents :]
+This is the child contents.
+[: endblock :]
+------------------------------------------------------------------------
+
+Now when we render the child template, it will be wrapped in the parent
+template instead:
+
+------------------------------------------------------------------------
+<?php
+require_once('templum.php');
+
+$templum = new Templum('./views');
+$tpl = $templum->template('child');
+print($tpl->render());
+?>
+------------------------------------------------------------------------
+
+The output of which is:
+
+------------------------------------------------------------------------
+<h1>Title</h1>
+<h2>child template.</h2>
+
+<div id="contents">
+        This is the child contents.
+</div>
+------------------------------------------------------------------------
+
+With this we can be build a complete hierarchy of templates that inherit from
+eachother, where the parent template is at the top of the hierarchy and the
+child template is at the bottom. We can create a lower template called
+'grandchild' which can inherit from the 'child' template and override a block
+in that template:
+
+------------------------------------------------------------------------
+[[ $this->inherit('child'); ]]
+[: block contents :]
+This is the grandchild contents.
+[: endblock :]
+------------------------------------------------------------------------
+
+When we modify the calling code to call the grandchild template, we get:
+
+------------------------------------------------------------------------
+<h1>Title</h1>
+<h2>child template.</h2>
+
+<div id="contents">
+        This is the grandchild contents.
+</div>
+------------------------------------------------------------------------
+
+As you can see, a block is always filled in with the contents defined by the
+lowest template in the hierarchy that defines that block.
 
 === Errors ===
 

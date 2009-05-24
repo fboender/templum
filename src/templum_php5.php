@@ -25,7 +25,7 @@
  * 
 */
 
-define("TEMPLUM_VERSION", "0.2.0");
+define("TEMPLUM_VERSION", "0.3.0");
 
 /**
  * @brief Templum errors.
@@ -227,24 +227,27 @@ class Templum {
 	 */
 	private function compile($contents, $autoEscape = True) {
 		// Parse custom short-hand tags to PHP code.
-		$contents = str_replace(
+		$contents = preg_replace(
 			array(
-				"{{", 
-				"}}\n", 
-				"}}", 
-				"[[", 
-				"]]"),
+				"/{{/", 
+				"/}}\n/", 
+				"/}}/", 
+				"/\[\[/", 
+				"/\]\]/",
+				'/^\s*@(.*)$/m',
+				'/\[:\s*block\s(.*)\s*:\](.*)\[:\s*endblock\s*:\]/Usm',
+				),
 			array(
 				$autoEscape ? "<?php echo(htmlspecialchars(" : "<?php echo(", 
 				$autoEscape ? ")); ?>\n\n" : "); ?>\n\n",
 				$autoEscape ? ")); ?>" : "); ?>",
 				"<?php ",
 				" ?>",
+				"<?php \\1 ?>",
+				"<?php if (array_key_exists('\\1', \$this->inheritBlocks)) { print(\$this->inheritBlocks['\\1']); } else if (\$this->inheritFrom === NULL) { ?>\\2<?php } else { ob_start(); ?>\\2<?php \$this->inheritBlocks['\\1'] = ob_get_contents(); ob_end_clean(); } ?>",
 				),
 			$contents
 		);
-		// Parse start-line PHP tags ("@" at the beginning of the line).
-		$contents = preg_replace('/^\s*@(.*)$/m', "<?php \\1 ?>", $contents);
 		return($contents);
 	}
 }
@@ -269,6 +272,8 @@ class TemplumTemplate {
 		$this->filename = $filename;
 		$this->contents = $contents;
 		$this->varsGlobal = $varsGlobal;
+		$this->inheritFrom = NULL; 
+		$this->inheritBlocks = array();
 	}
 
 	/**
@@ -306,6 +311,11 @@ class TemplumTemplate {
 		$result = ob_get_contents();
 		ob_end_clean();
 
+		if ($this->inheritFrom !== NULL) {
+			$this->inheritFrom->inheritBlocks = $this->inheritBlocks;
+			$result = $this->inheritFrom->render();
+		}
+
 		return($result);
 	}
 
@@ -341,6 +351,13 @@ class TemplumTemplate {
 		return($template->render());
 	}
 
+	/**
+	 * @brief Inherit from a parent template.
+	 * @param $template (string) The template to inherit from.
+	 */
+	public function inherit($template) {
+		$this->inheritFrom = $this->templum->template($template);
+	}
 }
 
 ?>

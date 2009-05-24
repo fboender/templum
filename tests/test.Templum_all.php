@@ -116,6 +116,11 @@ class TestTemplum_all {
 		$test->assert($out == "<h1>Test</h1>\n");
 	}
 
+	function Render_UTF8($test) {
+		$tpl = $this->templum->template('Render_UTF8');
+		$test->assert(mb_detect_encoding($tpl->render()) == "UTF-8");
+	}
+
 	function Template_Function($test) {
 		// Test if a function in a template doesn't cause errors when we define
 		// it twice
@@ -164,6 +169,21 @@ class TestTemplum_all {
 		$test->assert($out == "This is a test template in the en_US language.\n");
 	}
 
+	function Inherit_Basic($test) {
+		// Test if a basic inheritance works.
+		$templum = new Templum($this->templatePath, array());
+		$tpl = $templum->template('Inherit_Basic_Child');
+		$out = $tpl->render();
+		$test->assert($out == "<h1>Child</h1>\n");
+	}
+
+	function Inherit_Noblock($test) {
+		// Test if a parent block is rendered if child does not specify the block.
+		$templum = new Templum($this->templatePath, array());
+		$tpl = $templum->template('Inherit_Basic_Noblock');
+		$out = $tpl->render();
+		$test->assert($out == "<h1>Main</h1>\n");
+	}
 }
 
 ?>
