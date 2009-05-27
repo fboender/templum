@@ -9,7 +9,7 @@ class Example {
 		$this->description = implode("\n", array_slice($this->readme, 1));
 	}
 
-	public function getFiles() {
+	public function getFiles($highlight = True) {
 		$exampleFiles = array();
 
 		$stripPos = strlen('examples/'.$this->name);
@@ -33,7 +33,11 @@ class Example {
 				) {
 					continue;
 				}
-				$contents = file_get_contents($path);
+				if ($highlight) {
+					$contents = $this->highlight($path);
+				} else {
+					$contents = file_get_contents($path);
+				}
 				$exampleFile = array(
 					'path' => substr($path, $stripPos),
 					'contents' => $contents
@@ -47,6 +51,40 @@ class Example {
 			}
 		}
 		return($exampleFiles);
+	}
+
+	public function highlight($path) {
+		$contents = file_get_contents($path);
+		$contents = htmlentities($contents);
+		if (substr($path, -4) == '.php') {
+			// Parse start-line PHP tags ("@" at the beginning of the line).
+			$contents = preg_replace('/^(\/\/.*)$/m', "<font color=\"#C0C0C0\">\\1</font>", $contents);
+		} else {
+			$contents = preg_replace(
+				array(
+					"/{{/", 
+					"/}}\n/", 
+					"/}}/", 
+					"/\[\[/", 
+					"/\]\]/",
+					'/(^\s*@(.*)$)/m',
+					'/\[:/',
+					'/:\]/',
+					),
+				array(
+					'<font color="#FFFF00">{{',
+					'}}</font>',
+					'}}</font>',
+					'<font color="#D0D0D0"><font color="#FFFF00">[[</font>',
+					'<font color="#FFFF00">]]</font></font>',
+					'<font color="#FFFF00">\\1</font>',
+					'<font color="#FFFF00">[:',
+					':]</font>',
+					),
+				$contents
+			);
+		}
+		return($contents);
 	}
 }
 
