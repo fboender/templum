@@ -1,114 +1,77 @@
-/* Common */
 body {
 	background-color: #404040;
 	font-family: tahoma, helvetica, sans-serif;
-	color: #FFFFFF;
-	margin: 0px;
+	color: #E0E0E0;
+	margin: 0px 0px 0px 50px;
 }
-/* Header */
-div.header {
-	background-color: #202020;
+h2, h3, li, pre, table, p {
+	width: 800px;
 }
+
+
 h1.title {
+	background-color: #202020;
 	color: #FFFF00;
-	font-family: tahoma;
 	font-size: 48px;
-	margin: 0px;
-	padding: 30px 15px 0px 30px;
+	margin: 0px 0px 0px -50px;
+	padding: 10px 0px 0px 20px;
 }
-p.subtitle {
-	font-size: 12px;
-	margin: 0px;
-	padding: 0px 0px 15px 100px;
+h1.subtitle {
+	background-color: #202020;
+	font-size: medium;
 	font-family: monospace;
-}
-/* Menu */
-div.menu {
-	background-color: #606060;
-	padding-left: 10px;
-}
-div.menu a {
-	text-decoration: none;
-	color: #FFFFFF;
-	font-family: verdana, sans-serif;
-	font-weight: bold;
-	font-size: 12px;
-	margin-left: 20px;
-}
-div.menu a:hover {
-	color: #FFFF00;
-}
-/* Content */
-div.contents {
-	width: 600px;
-	margin: 50px 100px 50px 50px;
+	font-weight: normal;
+	margin: 0px 0px 0px -50px;
+	padding: 0px 0px 10px 70px;
 }
 h2 {
 	margin-top: 50px;
 	color: #909090;
 	border-bottom: 1px solid #202020;
 }
-li, p, th, td {
-	font-size: 15px;
-	text-align: justify;
+h3 {
 }
-li {
-	list-style-type: square;
-}
-tt {
-	font-size: 12px;
-}
-/* Examples */
-table.syntax {
-	margin-left: 25px;
-}
-table.syntax th {
-	background-color: #303030;
-	padding: 0px 5px 0px 5px;
-}
-table.syntax td {
-	padding-left: 10px;
-}
-p.code_title {
-	background-color: #202020;
-	color: #FFFFFF;
-	margin: 0px;
-	padding-left: 5px;
-}
-pre.code {
-	font-family: fixed, monospace;
-	font-size: 11px;
-	margin: 0px;
-	padding: 5px;
-	border: 1px solid #707070;
-	background-color: #505050;
-	color: #FFFFFF;
-}
-a {
-	color: #FFFF00;
-}
-table.download {
-	width: 100%;
-}
-table.download th {
+
+table th {
 	text-align: left;
 	background-color: #202020;
 	padding-left: 5px;
 }
-table.download td {
+
+ul.menu {
+	background-color: #606060;
+	margin: 0px 0px 0px -50px;
+	padding: 0px 0px 0px 20px;
+}
+ul.menu li {
+	display: inline;
+	margin: 0px;
+}
+ul.menu li a {
+	color: #FFFFFF;
+	text-decoration: none;
+	font-size: small;
+	font-weight: bold;
+	margin-left: 20px;
+}
+
+li {
+	list-style-type: square;
+}
+pre {
+	border: 1px solid #707070;
 	background-color: #505050;
-	padding-left: 5px;
+	color: #FFFFFF;
+	width: 800px;
 }
-table.download td.alpha {
-	color: #FF6000;
-}
-table.download td.beta {
+a {
 	color: #FFFF00;
 }
-table.download td.stable {
-	color: #30FF30;
+tt {
+	color: #FFFFFF;
+	font-weight: bold;
 }
-/* Other */
+
 p.sponsor {
 	float: right;
 	margin: 0px 20px 0px 20px;

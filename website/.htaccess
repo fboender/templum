@@ -1,0 +1,6 @@
+Options +FollowSymLinks
+RewriteEngine on
+
+RewriteBase /
+RewriteRule ^$           index.php  [L]
+RewriteRule ^([A-Z0-9\xa0-\xff].*)$ index.php?action=$1  [QSA,L]
