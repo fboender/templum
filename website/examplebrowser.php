@@ -1,7 +1,7 @@
 <?php
 
 class Example {
-	public $allowedExtensions = array('php', 'tpl', 'css');
+	public $allowedExtensions = array('php', 'tpl', 'css', 'en_US', 'nl_NL');
 	public function Example($name) {
 		$this->name = basename($name);
 		$this->readme = explode("\n", file_get_contents('examples/'.$this->name.'/README.txt'));
@@ -100,6 +100,10 @@ class ExampleManager {
 		}
 		closedir($dh);
 		return($examples);
+	}
+
+	public function getExample($path) {
+		return(new Example($path));
 	}
 }
 

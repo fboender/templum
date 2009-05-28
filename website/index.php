@@ -66,8 +66,10 @@ class Site extends Route {
 		$this->about();
 	}
 	public function about() {
+		$examplemanager = new ExampleManager();
+		$syntaxExample = $examplemanager->getExample('examples/all_syntax');
 		$tpl = $this->templum->template('about');
-		print($tpl->render());
+		print($tpl->render(compact('syntaxExample')));
 	}
 	public function examples() {
 		$examples = new Examples($this->templum);
@@ -92,24 +94,4 @@ class Site extends Route {
 
 $site = new Site($templum);
 
-#$page = 'about';
-#if(array_key_exists('action', $_GET)) {
-#	$page = trim(strtolower($_GET['action']), '/');
-#}
-#
-#
-#switch($page) {
-#	case 'about': 
-#	case 'documentation':
-#	case 'download':
-#	case 'development':
-#	case 'license':
-#		$tpl = $templum->template($page); print($tpl->render());
-#		break;
-#	case 'examples':
-#		var_dump($_SERVER);
-#		$examplebrowser = new ExampleBrowser();
-#	default:
-#		die('Unknown action');
-#}
-#?>
+?>

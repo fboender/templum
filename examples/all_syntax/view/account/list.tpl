@@ -29,7 +29,7 @@ if (!function_exists('helperBtnAction')) {
             </tr>
          @endforeach
          <tr>
-            <td>{{helperBtnAction('account.add', '', 'add')}}</td>
+            <td>[[helperBtnAction('account.add', '', 'add')]]</td>
             <td colspan="4">&nbsp;</td>
          </tr>
       </table>
