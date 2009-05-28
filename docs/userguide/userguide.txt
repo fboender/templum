@@ -54,7 +54,7 @@ Here's an example that uses just about all of the Templum API, except for
 Internationalisation:
 
 ------------------------------------------------------------------------
-include::api.php[]
+include::api-index_php[]
 ------------------------------------------------------------------------
 
 === Template Language ===
@@ -82,13 +82,35 @@ An example of a template that uses all available syntax as well as the
 Alternative PHP syntax:
 
 ------------------------------------------------------------------------
-include::list.tpl[]
+include::all_syntax-list_tpl[]
 ------------------------------------------------------------------------
 
 === Variables ===
 
 Variables can be easily used in your templates. Templum provides three types
 of variables:
+
+* Universal Variables
+* Global Variables
+* Local Variables
+
+Each of these are explained in the sections below. Templum can generally take variables straight away by passing a paramter containing an array when invoking one of its methods. For instance, we can pass local variables to a template when rendering it:
+
+------------------------------------------------------------------------
+$username = "jjohnson";
+$realname = "John Johnson";
+
+print($tpl->render(array('username' => $username, 'realname' => $realname));
+------------------------------------------------------------------------
+
+A more convenient way of passing these variables where you do not need to build an entire array each time is the +compact()+ PHP construct. +compact()+ takes string parameters and constructs an associative array for you on the fly. It does so by interpreting the strings you pass as variables from the local scope. Thus the above example can be rewritten as:
+
+------------------------------------------------------------------------
+$username = "jjohnson";
+$realname = "John Johnson";
+
+print($tpl->render(compact('username', 'realname'));
+------------------------------------------------------------------------
 
 ==== Universal Variables: ====
 
@@ -136,34 +158,10 @@ echo($tmplHeader->render() . $tmplContent->render() . $tmplFooter->render());
 
 The example above defines three variables: +$appTitle+, +$username+ and
 +$uiElements+. It creates a new Templum instance, and immediately passes
-+$appTitle+ as a universal variable. It then sets two more universal variables
-+$username+ and +$uiElements+. All three of these variables are now available
-in every template you retrieve using the Templum instance +$templum+.
-
-FIXME:
-The +compact()+ function ...
-Instead of manually building the array of key/value names, you can also use the
-PHP +compact()+ function. This function takes strings as parameters and then
-creates an key/value array of these variables and their values. The variables
-have to be defined in the local scope for this. Example:
-
-------------------------------------------------------------------------
-$username = 'jjohnson';
-$realname = 'John Johnson';
-
-$variables = compact('username', 'realname');
-
-var_dump($variables);
-// Output:
-//   array(2) {
-//     ["username"]=>
-//     string(8) "jjohnson"
-//     ["realname"]=>
-//     string(12) "John Johnson"
-//   }
-
-$templum = new Templum('view', compact('username', 'realname'));
-------------------------------------------------------------------------
++$appTitle+ as a universal variable (using the +compact()+ method). It then
+sets two more universal variables +$username+ and +$uiElements+. All three of
+these variables are now available in every template you retrieve using the
+Templum instance +$templum+.
 
 You can set additional Universal variables using the +Templum->setVar()+
 method of the Templum class. The +setVar()+ method takes two parameters:
@@ -255,7 +253,7 @@ to inherit from a generic parent template. This works by defining blocks in the
 parent template which can be overridden by a child template. The inheritance
 makes it very easy to create a generic layout template which is then filled in
 by various child templates. The child templates can themselves determine
-whether they want to be embedded in the generic layout template, making it esay
+whether they want to be embedded in the generic layout template, making it easy 
 to create multiple different layouts.
 
 Here's an example. First we define a parent template with a generic layout and
@@ -332,9 +330,34 @@ When we modify the calling code to call the grandchild template, we get:
 As you can see, a block is always filled in with the contents defined by the
 lowest template in the hierarchy that defines that block.
 
+=== Internationalisation (I18N) ===
+
+Templum provides internationalisation through the use of translated templates.
+These are simply normal templates with the locale suffixed on the filename. For
+example:
+
+* +helloworld.tpl+: Default template, perhaps symlinked to one of the translated versions.
+* +helloworld.tpl.en_US+: (US) English version of the template.
+* +helloworld.tpl.nl_NL+: Dutch version of the template.
+
+By default Templum refers to the +helloworld.tpl+ template. You can tell
+Templum which translation it should use by specifying a locale when
+instantiating Templum:
+
+------------------------------------------------------------------------
+$locale = 'nl_NL';
+$templum = new Templum('views/', array(), $locale);
+$tpl = $templum->template('hellworld');
+------------------------------------------------------------------------
+
+The example above will retrieve the dutch translation of the template:
++helloworld.tpl.nl_NL+. If no translated template is available Templum will
+fall back to the default template.
+
+
 === Errors ===
 
-==== PHP5 ====
+==== PHP v5 ====
 
 The two classes +Templum+ and +TemplumTemplate+ both have their own Exception
 class:
@@ -355,19 +378,43 @@ Templum, and therefor show normal PHP errors.
 Please see the API documentation for information on which methods throw which
 exceptions.
 
-==== PHP 4 ====
+==== PHP v4 ====
 
 The PHP v4 support for errors in Templum is rather limited. Everything is
 simply handled as a terminal error, and your script will die.
 
-=== Internationalisation (I18N) ===
-
-FIXME: Description of Internationalisation support.
-
-For now, see the +examples/i18n/+ example.
-
 == Security ==
 
-FIXME: Some explanation about why templum is secure.
+=== Automatic HTML escaping ===
 
+Templum tries to enhance the security of your application by automatically
+escaping HTML entities in output generated using the +{{+ and +}}+ syntax. You
+can turn this feature off using the +Templum->setAutoEscape(False)+ method on
+the Templum instance. This will turn off escaping for all templates retrieved
+using that Templum instance. 
+
+------------------------------------------------------------------------
+$templum = new Templum('views/');
+$templum->setAutoEscape(False);
+------------------------------------------------------------------------
+
+You can also disable escaping per template by passing +False+ to the
++$autoEscape+ parameter of the +Templum->template()+ method like so:
+
+------------------------------------------------------------------------
+$templum = new Templum('views/');
+$tpl = $templum->template('accounts/list', array(), False);
+------------------------------------------------------------------------
+
+=== Eval ===
+
+Although Templum uses the +eval()+ PHP function, which is generally regarded as
+an unsafe construct, Templum never evaluates contents that can be influenced
+from outside the template as it exists on disk. It is therefor not possible for
+a remote attacker to inject data which might be interpreted as code by Templum.
+Templum merely translates special constructs such as +{{+ and +}}+ to PHP code
+for printing the contents between those constructs. It is therefor just as safe
+as a normal +echo()+ of a variable. 
+
+Care must be taken when dealing with Cross-site scripting attacks though. If you turn off Templum's automatic HTML entities escaping, or use another method of echoing variables than using the +{{+ and +}}+ syntax, you run the risk of injecting specially crafted HTML or Javascript code into the resulting page. Always properly sanitize any output.
 
