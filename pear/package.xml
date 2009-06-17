@@ -13,8 +13,8 @@
  <date>2009-04-26</date>
  <time>13:05:50</time>
  <version>
-  <release>0.2.0</release>
-  <api>0.2</api>
+  <release>0.3.0</release>
+  <api>0.3</api>
  </version>
  <stability>
   <release>alpha</release>
@@ -71,6 +71,21 @@ Initial release.
    <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
    <notes>
 Bugfixes and minor improvements.
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.3.0</release>
+    <api>0.3</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2009-06-17</date>
+   <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
+   <notes>
+Bugfixes, documentation updates and implementation of inheritance.
    </notes>
   </release>
  </changelog>
