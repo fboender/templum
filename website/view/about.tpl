@@ -6,7 +6,7 @@
 <h2>Features</h2>
 <ul>
 	<li>Lightweight. About 140 lines of code (excluding &plusmn;140 lines of API comments).</li>
-	<li>Re-uses PHP <a href="http://php.net/alternative_syntax">alternative syntax</a> for clarity and full power.</li>
+	<li>Re-uses PHP <a href="http://php.net/alternative_syntax">alternative syntax</a> for clarity and full power. (You can also use normal syntax)</li>
 	<li>Very fast. Renders 10,000 templates in <tt>0.741s</tt> (Native PHP takes <tt>0.633s</tt>).</li>
 	<li>I18N (translated) templates.(<a href="/Examples/I18N">Example</a>, <a href="/docs/userguide/userguide.html#_internationalisation_i18n">Documentation</a>)</li>
 	<li>Per-session caching of rendered templates.</li>
