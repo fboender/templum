@@ -184,6 +184,15 @@ class TestTemplum_all {
 		$out = $tpl->render();
 		$test->assert($out == "<h1>Main</h1>\n");
 	}
+
+	function Include_Basic($test) {
+		// Test if includes work.
+		$templum = new Templum($this->templatePath, array());
+		$tpl = $templum->template('Include_Parent');
+		$out = $tpl->render();
+		$test->assert($out == "child\n");
+
+	}
 }
 
 ?>

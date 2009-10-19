@@ -1,0 +1,12 @@
+Templum test suite
+==================
+
+Files
+-----
+
+class.UnitTest.php:    Contains a Unit Testing class which uses introspection to run methods in a testing class.
+test.Templum_all.php:  Base testing class. Tests everything that is PHP version independant.
+test.Templum_php4.php: Base PHP4 testing class. Extends Base testing class. Tests everything that is PHP4 dependant.
+test.Templum_php5.php: Base PHP5 testing class. Extends Base testing class. Tests everything that is PHP5 dependant.
+test.php:              Main test runner. Runs php4 or php5 tests, depending on which interpreter it is run with.
+test_data:             Directory containing testing templates.
