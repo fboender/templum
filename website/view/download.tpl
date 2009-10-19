@@ -1,6 +1,7 @@
 [[ $this->inherit('index'); ]]
 [: block section_name :]Download[: endblock :]
 [: block section :]
+<p>There are two ways to install Templum: Via PEAR (<i>recommended</i>), or manually from the source package:</p>
 <h3>PEAR</h3>
 <p><i>Notice:</i> If you've got an older version of Templum installed, you must first remove that version using the following command:</p>
 <pre class="command">pear uninstall channel://__uri/templum-0.3.0</pre>
