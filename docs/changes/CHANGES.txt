@@ -1,3 +1,6 @@
+v0.4.0
+	- Added support for including other templates.
+
 v0.3.0
 
 	- htmlspecialchars() is now used instead of htmlentities() for better

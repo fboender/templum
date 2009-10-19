@@ -341,14 +341,17 @@ class TemplumTemplate {
 		throw new TemplumTemplateError("$string (file: {$this->filename}, line $line)", 1, $this);
 	}
 
-
-	/* LEFTOFF HERE */
-	public function inc($name, $varLocals = array()) {
-		if (!isset($this->templateEngine)) {
-			throw new TemplumTemplateError("Cannot include in TemplumTemplate create from string.", 2, $this);
+	/**
+	 * @brief Include another template.
+	 * @param $template (string) The template to include.
+	 * @param $varsLocal (array) An array of key/value pairs which represent the local variables for this template. 
+	 */
+	public function inc($template, $varsLocal = array()) {
+		if (!isset($this->templum)) {
+			throw new TemplumTemplateError("Cannot include templates in a TemplumTemplate instance created from a string.", 2, $this);
 		}
-		$template = $this->templateEngine->template($name, $this->varsGlobal);
-		return($template->render());
+		$t = $this->templum->template($template, $varsLocal);
+		print($t->render());
 	}
 
 	/**

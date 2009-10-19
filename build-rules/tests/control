@@ -1,1 +1,2 @@
 description: Run the unit- and other tests.
+require: tests.php4, tests.php5

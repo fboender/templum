@@ -330,6 +330,34 @@ When we modify the calling code to call the grandchild template, we get:
 As you can see, a block is always filled in with the contents defined by the
 lowest template in the hierarchy that defines that block.
 
+=== Including ===
+
+You can easily include other templates in the current template using the
++$this->inc()+ method. Example:
+
+------------------------------------------------------------------------
+<h1>Title</h1>
+
+<div id="menu">
+        @ $this->inc('menu')
+</div>
+<div id="contents">
+        Contents.
+</div>
+------------------------------------------------------------------------
+
+The contents of +menu.tpl+ will then be included.
+
+------------------------------------------------------------------------
+<ul>
+	<li>File
+		<ul>
+			<li>Open..</li>
+			<li>Quit</li>
+		</ul>
+	</li>
+</ul>
+------------------------------------------------------------------------
 === Internationalisation (I18N) ===
 
 Templum provides internationalisation through the use of translated templates.
