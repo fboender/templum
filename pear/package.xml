@@ -13,12 +13,12 @@
  <date>2009-04-26</date>
  <time>13:05:50</time>
  <version>
-  <release>0.3.0</release>
-  <api>0.3</api>
+  <release>0.4.0</release>
+  <api>0.4</api>
  </version>
  <stability>
   <release>alpha</release>
-  <api>alpha</api>
+  <api>beta</api>
  </stability>
  <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
  <notes>
@@ -86,6 +86,21 @@ Bugfixes and minor improvements.
    <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
    <notes>
 Bugfixes, documentation updates and implementation of inheritance.
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.4.0</release>
+    <api>0.4</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2009-06-17</date>
+   <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
+   <notes>
+Including other templates.
    </notes>
   </release>
  </changelog>

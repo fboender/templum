@@ -1,7 +1,7 @@
 Templum Userguide
 =================
 Ferry Boender
-0.3.0, May 24, 2009
+0.4.0, Oct 8, 2009
 :Author Initials: FB
 
 About
@@ -358,6 +358,7 @@ The contents of +menu.tpl+ will then be included.
 	</li>
 </ul>
 ------------------------------------------------------------------------
+
 === Internationalisation (I18N) ===
 
 Templum provides internationalisation through the use of translated templates.
