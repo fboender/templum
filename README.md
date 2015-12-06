@@ -131,7 +131,7 @@ Installation
 
 The preferred method is installation through PEAR:
 
-    $ pear install https://bitbucket.org/fboender/templum/downloads/templum-0.4.0.tgz
+    $ pear install https://github.com/fboender/templum/releases/download/0.4.0/templum-0.4.0.tgz
 
 Or you can install it manually by downloading an archive and running:
 
